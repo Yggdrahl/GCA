@@ -1,0 +1,1 @@
+Wenn die Datei nnicht besonders makiert ist, wird Sie von Git normal getracked.
