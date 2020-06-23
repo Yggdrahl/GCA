@@ -22,18 +22,19 @@ public class CheckoutService {
 	
 	/*
 	 * ToDo:
-	 * Hole Alles aus dem Cart raus.
-	 * Gleiche alle Produkte aus dem Cart mit dem Catalog ab (jedes Produkt einzeln) + werfe falsche Werte raus
-	 * Frage ShippingKosten nach
+	 * [X] Hole Alles aus dem Cart raus.
+	 * [ ] Gleiche alle Produkte aus dem Cart mit dem Catalog ab (jedes Produkt einzeln) + werfe falsche Werte raus
+	 * [ ] Frage ShippingKosten nach
 	 * 
-	 * Warte auf Kaufbestätigung
+	 * [ ] Warte auf Kaufbestätigung
 	 * 
-	 * Frage nach Trackingnummer
-	 * Speichere Trackingnummer in Order-Repository mit Cart, Email, usw.
-	 * Gibt Order-Informationen aus.
+	 * [ ] Frage nach Trackingnummer
+	 * [ ] Speichere Trackingnummer in Order-Repository mit Cart, Email, usw.
+	 * [ ] Gibt Order-Informationen aus.
 	 */
 	
 	private final OkHttpClient httpClient = new OkHttpClient();
+	private Product[] cart;
 	
 	public List<Product> getCart() {
 		
@@ -52,7 +53,7 @@ public class CheckoutService {
             String jcode = response.body().string();
             System.out.println(jcode);
             
-            Product[] cart;
+            
             JSONParser jsonParser = new JSONParser();
             try {
             	
@@ -60,12 +61,12 @@ public class CheckoutService {
 				JSONArray jsonArray = (JSONArray) jsonParser.parse(jcode);
 				for(int i = 0; i < jsonArray.size(); i++) {
 					JSONObject obj = (JSONObject) jsonArray.get(i);
-					System.out.println(obj.get("id"));
+					System.out.println(obj.get("id"));					
 					currentCart.add(new Product(
-							obj.get("id"),
-							obj.get("price"),
-							obj.get("name"),
-							obj.get("image")
+							(int) obj.get("id"),
+							(double) obj.get("price"),
+							(String) obj.get("name"),
+							(String) obj.get("image")
 							));
 				}
 				/*
@@ -92,7 +93,9 @@ public class CheckoutService {
 		return null;
 	}
 	
-	private void sendGet() {
+	
+	
+	
 		/*
 		// form parameters
         RequestBody formBody = new FormBody.Builder()
@@ -108,9 +111,7 @@ public class CheckoutService {
                 .build();
                 
         */
-		
-		
-	}
+	
 	
 	
 	
