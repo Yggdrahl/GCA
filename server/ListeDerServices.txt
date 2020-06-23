@@ -1,0 +1,35 @@
+Hier die Liste mit allen Services, ihren Ports und ihren Zugriffen aus Sicht vom Frontend
+
+/**
+Catalog-Service (Port:8081)
+
+JSON-Objekt:	Product.id		: int,
+				Product.price	: double,
+				Product.name	: String,
+				Product.image	: String (URL)
+
+Zugriffe:
+	"/products" -> Gibt JSON-Array mit dem gesamten Produktkatalog wieder
+	"/product/{name}" -> Gibt ein bestimmtes Product anhand des Namens oder der ID zurück
+	"/product/?id={int}" -> Gibt ein bestimmtes Product anhand der ID zurück
+*/
+
+/**
+Shipping-Service (Port:8082)
+
+JSON-Objekt:	FALSE (Rückgabe ist Double oder String)
+
+Zugriffe:
+	"/getShippingCosts/?costs={double}" -> Gibt die passenden Versandkosten zurück. Eingabe wird nicht im Backend validert (mit DB verglichen)
+	"/getTracking" -> Erstellt einen Hashwert, der der Bestellung zugeordnet werden kann
+*/
+
+/**
+Checkout-Service (Port:8083)
+
+JSON-Objekt:	Order.id		: int,
+				
+
+Zugriffe:
+	"/??" -> WORK IN PROGRESS
+*/
