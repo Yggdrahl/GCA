@@ -1,8 +1,25 @@
-.footer
-{
-  background-color: pink;
+footer {
+  flex-shrink: 0;
+  padding: 0 !important;
   position: absolute;
+  width: 99%;
+  right: 0.5%;
+  left: 0.5%;
   bottom: 0;
-  width: 1905px;
-  height: 100px;
+}
+
+footer .footer-top {
+  background-color: #f0f0f0;
+}
+
+footer .footer-top .footer-content{
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+@media (min-width: 1679px) {
+  footer .footer-top {
+    padding: 0 16.96428571%;
+  }
 }

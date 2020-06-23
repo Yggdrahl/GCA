@@ -1,12 +1,53 @@
+<body>
 <header>
+  <div class="navbar">
+    <div class="container d-flex justify-content-between">
+      <div class="h-free-shipping">Free shipping with $75 purchase! &nbsp;&nbsp;</div>
+
+
+      <div class="h-controls">
+        <div class="h-control">
+          <img src="assets/images/icons/Hipster_CurrencyIcon.svg" alt="icon" class="icon" />
+          <form method="POST" class="controls-form" action="/setCurrency" id="currency_form" >
+            <select name="currency_code" onchange="document.getElementById('currency_form').submit();">
+            </select>
+          </form>
+          <img src="assets/images/icons/Hipster_DownArrow.svg" alt="icon" class="icon arrow" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="navbar sub-navbar">
+    <div class="container d-flex justify-content-between">
+      <a href="/" class="navbar-brand d-flex align-items-center">
+        <img src="assets/images/icons/Hipster_NavLogo.svg" alt="logo" class="logo" />
+      </a>
+      <div>
+        <a href="/cart">
+          <hr class="v1"> <hr class="v2">
+          <img src="assets/images/icons/Hipster_CartIcon.svg" alt="cart-icon" class="cartImg" />
+          <span class="cart">Cart
+                        </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</header>
+</body>
+
+
+<!--<header>
   <div class="overHeader">
-    <p>Free shipping with 75 $ purchase!</p> <!--Die 75 könnte man aus dem Backend auslesen-->
+    <p>Free shipping with 75 $ purchase!</p> Die 75 könnte man aus dem Backend auslesen
   </div>
   <div class="header">
     <h1 class="shopName"><span class="word1">Online</span> <span class="word2">Boutique</span></h1>
-    <img class="logo" src="../images/Platzhalter.jpg">
-    <img class="warenkorbImage" src="../images/Platzhalter.jpg">
+    <img class="logo" src="assets/images/favicon.ico">
+    <img class="warenkorbImage" src ="assets/images/favicon.ico">
     <div class="v1"></div>
     <div class="v2"></div>
   </div>
 </header>
+-->

@@ -3,16 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IndexComponent } from './components/index/index.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProductViewComponent } from './components/product-view/product-view.component';
-import {FormsModule} from "@angular/forms";
+
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IndexComponent,
     HeaderComponent,
     FooterComponent,
     ProductViewComponent
@@ -20,7 +19,7 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

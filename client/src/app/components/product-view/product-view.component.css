@@ -1,0 +1,27 @@
+.productView
+{
+  position: relative;
+}
+
+.topImage
+{
+  width: 100%;
+}
+
+.heroLogo
+{
+  position: absolute;
+  z-index: 1;
+  height: 300px;
+  width: 300px;
+  left: 800px;
+  top: 30px;
+}
+
+.hotProducts
+{
+  position: absolute;
+  height: 130px;
+  width: 130px;
+  left: 885px;
+}

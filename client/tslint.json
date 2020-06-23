@@ -101,6 +101,7 @@
         "allow-pascal-case"
       ]
     },
+
     "no-trailing-whitespace": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
