@@ -12,8 +12,8 @@
       <span class="price">{{cartContent.price}} €</span>
     </p>
   </div>
-  <p class="shippingCost">Shipping Cost: {{shippingCost}}</p>
-  <p class="totalCost">Total Cost: <span class="totalPrice"> {{(totalPrice+shippingCost).toFixed(2)}} €</span> </p>
+  <p class="shippingCost" *ngIf="cartContent.length > 0">Shipping Cost: {{shippingCost}}</p>
+  <p class="totalCost" *ngIf="cartContent.length > 0">Total Cost: <span class="totalPrice"> {{(totalPrice+shippingCost).toFixed(2)}} €</span> </p>
 </div>
   <div class="container py-3 px-lg-5 py-lg-5">
     <div class="col-12 col-lg-8 offset-lg-2">
