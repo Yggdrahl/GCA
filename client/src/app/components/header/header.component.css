@@ -91,27 +91,6 @@ header .navbar.sub-navbar .logo {
   margin-top: 5px;
 }
 
-.v1
-{
-  border-left: 1px solid #b4b2bb;
-  height: 59px;
-  top: 0;
-  position: absolute;
-  right: 512px;
-  margin: 0;
-}
-
-.v2
-{
-  border-left: 1px solid #b4b2bb;
-  height: 59px;
-  top: 0;
-  position: absolute;
-  right: 395px;
-  margin: 0;
-}
-
-
 header .navbar.sub-navbar a {
   color: #b4b2bb;
 }
