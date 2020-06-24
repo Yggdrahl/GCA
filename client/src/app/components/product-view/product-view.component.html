@@ -1,11 +1,9 @@
-<div class="productView">
+ <div class="productView">
   <img class="topImage" src="assets/images/header/HeroBannerImage2.png">
     <img class="heroLogo" src="assets/images/icons/Hipster_HeroLogo.svg">
   <div class="productViewContainer">
     <img class="hotProducts" src="assets/images/icons/Hipster_HotProducts.svg">
   </div>
-  {{products}}
-
   <div *ngFor="let product of products">
     <br><br>
     <p>{{product.name}}</p>
@@ -13,5 +11,5 @@
     <br>
     <button (click)="addToCart(product.id)">Kaufen für {{product.price}} €</button>
   </div>
+ </div>
 
-</div>
