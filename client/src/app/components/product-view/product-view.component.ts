@@ -18,16 +18,15 @@ export class ProductViewComponent implements OnInit {
   urlCatalog = 'http://localhost:8081/products';
   urlCart = 'http://localhost:8084/cart';
   products;
+  cartSize; //Wie viele Artikel sind im Warenkorb (für die kleine Zahl am Einkaufswagen)
 
 
   constructor(private http: HttpClient) {
     this.http.get(this.urlCatalog).subscribe((data: any) => {
       console.log(data);
       this.products = JSON.parse(JSON.stringify(data)); //Es war doch ein ".stringify" in einem ".parse" (genau wie in GFE)
-      //this.image = JSON.stringify(data.image);
       //this.image = this.image.substring(1, this.image.length - 1);
-      console.log(this.products[0].name); //Das gibt jetzt "Camera" aus, weil "Camera" das erste Produkt ist!
-
+      this.getCartSize();
     });
   }
 
@@ -35,6 +34,9 @@ export class ProductViewComponent implements OnInit {
   }
 
 
+  /**
+   * Fügt ein Produkt zum Warenkorb hinzu
+   */
   addToCart(id: number) {
 
     //Proukt mit id finden in "this.products"
@@ -47,16 +49,26 @@ export class ProductViewComponent implements OnInit {
 
     if (product != null) {
       const headers = { 'Content-Type': 'application/json' }
-      var jcode = this.products[0];
       //const body = { id:99, price:199.99, name:"Teekanne", imag:null }; //Wenn man das JSON "hardcodet"
       //const body = JSON.parse(JSON.stringify('{"id":80,"price":149.98,"name":"Camera","image":null}')); //Wenn das JSON aus einem String erzeugt wird
       //const body = this.products[0]; //Wenn das JSON aus dem Catalog-Array kommt
       this.http.post(this.urlCart, product, { headers }).subscribe(data => { //Statt "product" kann auch "body" übergeben werden
       console.log("Product was added to cart");
+      this.getCartSize();
       });
     }
-
+    
   }
+
+  /**
+   * Fragt das Array des aktuellen Warenkorbs an, um zu gucken, wie viele Einträge es gibt
+   */
+getCartSize() {
+  this.http.get(this.urlCart).subscribe((cart: any) => {
+    this.cartSize = JSON.parse(JSON.stringify(cart)).length;
+    console.log(this.cartSize);
+  });
+}
 
 
   /* //Wenn man die gleiche Funktion auch mit einem JSON Objekt erstellen würde (funktioniert durch html aber nicht)

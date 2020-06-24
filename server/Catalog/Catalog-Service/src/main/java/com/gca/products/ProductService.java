@@ -10,9 +10,16 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
 	private List<Product> repo = new ArrayList<Product>(
-			Arrays.asList(new Product(1, 149.98, "Camera"), new Product(2, 15.98, "Typewriter"),
-					new Product(3, 5489.98, "Greenhouse"), new Product(4, 854.98, "Barista Kit"),
-					new Product(5, 54.98, "Vintage Camera"), new Product(6, 21.98, "Turntable"), new Product(7, 21.98, "camp-mug", "assets/images/products/camp-mug.jpg")));
+			Arrays.asList(new Product(1, 149.98, "Vintage-Objektiv", "assets/images/products/camera-lens.jpg"),
+					new Product(2, 15.98, "Schreibmaschine", "assets/images/products/typewriter.jpg"),
+					new Product(3, 5489.98, "Terrarium", "assets/images/products/terrarium.jpg"),
+					new Product(4, 854.98, "Barista Kit", "assets/images/products/barista-kit.jpg"),
+					new Product(5, 54.98, "Film-Kamera", "assets/images/products/film-camera.jpg"),
+					new Product(6, 21.98, "Plattenspieler", "assets/images/products/record-player.jpg"),
+					new Product(7, 21.98, "Camp-Tasse", "assets/images/products/camp-mug.jpg"),
+					new Product(8, 21.98, "Hollandrad", "assets/images/products/city-bike.jpg"),
+					new Product(9, 21.98, "Zimmerpflanze", "assets/images/products/air-plant.jpg")
+					));
 
 	public List<Product> getAll() {
 		return this.repo;

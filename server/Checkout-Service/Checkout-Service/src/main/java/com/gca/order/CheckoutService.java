@@ -12,8 +12,9 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+
 
 
 
@@ -34,7 +35,34 @@ public class CheckoutService {
 	 */
 	
 	private final OkHttpClient httpClient = new OkHttpClient();
-	private Product[] cart;
+	
+	public void checkout() {
+		List<Product>cart = new ArrayList<Product>();
+		List<Product>actualCart = new ArrayList<Product>();
+		double productCosts;
+		double shippingCosts;
+		
+		//Schritt 1: Cart auslesen (noch keine Validierung)
+		cart = getCart();
+		
+		if(cart != null) {
+			//Schritt 2: Cart mit Repository validieren
+			actualCart = validateCart(cart);
+		}
+		
+		if(actualCart != null) {
+			//Schritt 3 und Versandkosten bestimmen
+			productCosts = getProductCosts(actualCart);
+			
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	public List<Product> getCart() {
 		
@@ -61,21 +89,15 @@ public class CheckoutService {
 				JSONArray jsonArray = (JSONArray) jsonParser.parse(jcode);
 				for(int i = 0; i < jsonArray.size(); i++) {
 					JSONObject obj = (JSONObject) jsonArray.get(i);
-					System.out.println(obj.get("id"));					
+					
 					currentCart.add(new Product(
-							(int) obj.get("id"),
-							(double) obj.get("price"),
+							(int) (long) (obj.get("id")),
+							(Double) obj.get("price"),
 							(String) obj.get("name"),
 							(String) obj.get("image")
 							));
+							
 				}
-				/*
-				JSONArray jsonArray = (JSONArray) jsonObject.get("id");
-				Iterator<Integer> it = jsonArray.iterator();
-				while(it.hasNext()) {
-					System.out.println("id: " + it.next());
-				}
-				*/
 				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
@@ -88,11 +110,22 @@ public class CheckoutService {
 		}
 		//---------------------------------------------------
 		
-
-
-		return null;
+		return currentCart;
 	}
 	
+	private List<Product> validateCart(List<Product> falseCart) {
+		List<Product> actualCart = new ArrayList<Product>();
+		
+		return actualCart;
+	}
+	
+	private double getProductCosts(List<Product> cart) {
+		double sum = 0;
+		for(int i = 0; i < cart.size(); i++) {
+			sum = sum + cart.get(i).price;
+		}
+		return sum;
+	}
 	
 	
 	
