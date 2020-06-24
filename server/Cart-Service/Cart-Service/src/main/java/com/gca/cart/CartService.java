@@ -36,4 +36,9 @@ public class CartService {
 		}
 		return false;
 	}
+	
+	public boolean removeAll() {
+		this.cartRepo.clear();
+		return true;
+	}
 }

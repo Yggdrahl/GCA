@@ -26,10 +26,10 @@ public class CheckoutController {
 //
 //		}
 	
-	@RequestMapping("/checkout")
+	@RequestMapping(method = RequestMethod.POST, value = "/checkout")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public void checkout() {
-		checkoutService.getCart();
+	public void checkout(@RequestBody Order order) {
+		checkoutService.checkout(order);
 	}
 	
 	
