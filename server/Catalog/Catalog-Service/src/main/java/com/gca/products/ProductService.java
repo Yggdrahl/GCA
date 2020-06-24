@@ -18,7 +18,8 @@ public class ProductService {
 					new Product(6, 21.98, "Plattenspieler", "assets/images/products/record-player.jpg"),
 					new Product(7, 21.98, "Camp-Tasse", "assets/images/products/camp-mug.jpg"),
 					new Product(8, 21.98, "Hollandrad", "assets/images/products/city-bike.jpg"),
-					new Product(9, 21.98, "Zimmerpflanze", "assets/images/products/air-plant.jpg")
+					new Product(9, 21.98, "Zimmerpflanze", "assets/images/products/air-plant.jpg"),
+					new Product(10, 400.00, "Fork to go", "assets/images/products/fork-to-go.jpg")
 					));
 
 	public List<Product> getAll() {

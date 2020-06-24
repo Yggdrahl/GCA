@@ -33,17 +33,7 @@
       true,
       "rxjs/Rx"
     ],
-    "import-spacing": true,
-    "indent": {
-      "options": [
-        "spaces"
-      ]
-    },
     "max-classes-per-file": false,
-    "max-line-length": [
-      true,
-      140
-    ],
     "member-ordering": [
       true,
       {
@@ -72,14 +62,6 @@
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
     "semicolon": {
       "options": [
         "always"

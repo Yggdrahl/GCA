@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ProductViewComponent } from './components/product-view/product-view.component';
 
 /*Kommunikation mit dem Backend*/
 import { HttpClientModule} from '@angular/common/http';
@@ -18,12 +15,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+/* Import Components*/
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ProductViewComponent } from './components/product-view/product-view.component';
+import { CartComponent } from './components/cart/cart.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    CartComponent,
+    OrderConfirmationComponent,
   ],
   imports: [
     BrowserModule,
