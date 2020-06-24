@@ -1,0 +1,88 @@
+.checkoutText {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30pt;
+}
+
+.btn-info {
+  margin: 0 auto;
+  width: 175px;
+  font-size: 15pt;
+  height: 40px;
+  margin: 0 250px;
+}
+
+a
+{
+  text-decoration: none;
+  color: black;
+}
+
+.overCart {
+  font-size: 20pt;
+  font-weight: bold;
+  margin-left: 400px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+
+.emptybtn {
+  background-color: #eaecef;
+  float: right;
+  margin-right: 10px;
+}
+
+.browsingbtn {
+  background-color: #4dc8c6;
+  float: right;
+  margin-right: 400px;
+}
+
+.productImage {
+
+  width: 300px;
+  height: 192px;
+}
+
+
+.cartProducts {
+  background-color: white;
+  width: 600px;
+  height: 192px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.name {
+  position: absolute;
+  font-size: 16pt;
+  margin-left: 15px;
+  font-weight: bold;
+  top: 77px;
+}
+
+.price {
+  position: absolute;
+  padding-left: 315px;
+  margin-top: -70px;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+.totalCost
+{
+  text-align: center;
+  font-size: 16pt;
+}
+
+.shippingCost
+{
+  font-size: 13pt;
+  text-align: center;
+  color: #6c757d
+}
+
+.totalPrice
+{
+  font-weight: bold;
+}

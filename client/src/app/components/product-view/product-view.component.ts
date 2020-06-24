@@ -39,6 +39,7 @@ export class ProductViewComponent implements OnInit {
     for (var i = 0; i < this.products.length; i++) {
       if (this.products[i].id === id) {
         product = this.products[i];
+
       }
     }
 
@@ -51,6 +52,7 @@ export class ProductViewComponent implements OnInit {
       this.getCartSize();
       });
     }
+
   }
 
   /**

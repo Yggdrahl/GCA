@@ -5,13 +5,12 @@
     <img class="hotProducts" src="assets/images/icons/Hipster_HotProducts.svg">
   </div>
   <section>
-    <div *ngFor="let product of products" class="allProducts">
-        <img src="{{product.image}}" class="productImage">
+    <div *ngFor="let product of products" class="allProducts" >
+      <img src="{{product.image}}" class="productImage">
         <br>
         <div class="productInfo" (click)="addToCart(product.id)">
           <p class="productName">{{product.name}}</p>
           <p class="productPrice">{{product.price}} €</p>
-          <!--<button (click)="addToCart(product.id)" class="buybtn">Kaufen für {{product.price}} €</button>-->
       </div>
     </div>
   </section>
