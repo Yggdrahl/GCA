@@ -18,7 +18,6 @@ export class ProductViewComponent implements OnInit {
   products;
   cartSize; // Wie viele Artikel sind im Warenkorb (für die kleine Zahl am Einkaufswagen)
 
-
   constructor(private http: HttpClient) {
     this.http.get(this.urlCatalog).subscribe((data: any) => {
       this.products = JSON.parse(JSON.stringify(data));
@@ -52,7 +51,6 @@ export class ProductViewComponent implements OnInit {
       this.getCartSize();
       });
     }
-
   }
 
   /**

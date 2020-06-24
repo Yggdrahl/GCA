@@ -24,3 +24,52 @@
   width: 130px;
   left: 885px;
 }
+
+section
+{
+  text-align: center;
+  margin-top: 40px;
+}
+
+.allProducts
+{
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 100px;
+}
+
+.allProducts:last-child
+{
+  margin-bottom: 50px;
+}
+
+.productImage
+{
+  width: 500px;
+}
+
+.productInfo
+{
+  background-color: white;
+  height: 90px;
+  cursor: pointer;
+}
+
+.productInfo:hover
+{
+  background-color: rgba(211, 211, 211, 0.18);
+}
+
+.productName
+{
+  padding-top: 15px;
+  width: 100%;
+  font-size: 30pt;
+}
+
+.productPrice
+{
+  padding-top: 10px;
+  width: 100%;
+  font-size: 25pt;
+}
