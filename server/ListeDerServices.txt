@@ -1,33 +1,39 @@
 Hier die Liste mit allen Services, ihren Ports und ihren Zugriffen aus Sicht vom Frontend
 
 /**---------------------------------------------------------
-Catalog-Service (Port:8081)
+Catalog-Service (Port:8081) [Fertig]
 
-JSON-Objekt:	Product.id		: int,
+JSON-Objekt:	{
+				Product.id		: int,
 				Product.price	: double,
 				Product.name	: String,
 				Product.image	: String (URL)
+				} => JSONArray
+				
 
 Zugriffe:
-	"/products" -> Gibt JSON-Array mit dem gesamten Produktkatalog wieder
-	"/product/{name}" -> Gibt ein bestimmtes Product anhand des Namens oder der ID zurück
-	"/product/?id={int}" -> Gibt ein bestimmtes Product anhand der ID zurück
+	"/products"				-> Gibt JSON-Array mit dem gesamten Produktkatalog wieder
+	"/product/{name}"		-> Gibt ein bestimmtes Product anhand des Namens oder der ID zurück
+	"/product/?id={int}"	-> Gibt ein bestimmtes Product anhand der ID zurück
 */---------------------------------------------------------
 
 /**---------------------------------------------------------
-Shipping-Service (Port:8082)
+Shipping-Service (Port:8082) [Fertig]
 
-JSON-Objekt:	FALSE (Rückgabe ist Double oder String)
+JSON-Objekt:	String
 
 Zugriffe:
-	"/getShippingCosts/?costs={double}" -> Gibt die passenden Versandkosten zurück. Eingabe wird nicht im Backend validert (mit DB verglichen)
-	"/getTracking" -> Erstellt einen Hashwert, der der Bestellung zugeordnet werden kann
+	"/getShippingCosts/?costs={double}"	-> Gibt die passenden Versandkosten zurück. Eingabe wird nicht im Backend validert (mit DB verglichen)
+	"/getTracking"						-> Erstellt einen Hashwert, der der Bestellung zugeordnet werden kann
 */---------------------------------------------------------
 
 /**---------------------------------------------------------
 Checkout-Service (Port:8083)
 
-JSON-Objekt:	Order.id		: int,
+JSON-Objekt:	{
+				Order.id		: int,
+				??				: WORK IN PROGRESS
+				} => JSONArray
 				
 
 Zugriffe:
@@ -35,12 +41,18 @@ Zugriffe:
 */---------------------------------------------------------
 
 /**---------------------------------------------------------
-Cart-Service (Port:8084)
+Cart-Service (Port:8084) [Fertig]
 
-JSON-Objekt:	Cart.??
+JSON-Objekt:	{
+				Product.id		: int,
+				Product.price	: double,
+				Product.name	: String,
+				Product.image	: String (URL)
+				} => JSONArray
 				
 
 Zugriffe:
 	"/cart" -> (GET)	Gibt den Warenkorb mit Product-Objekten aus
-	"/cart" -> (POST)	Fügt Proukte in den Warenkorb (JSON muss im POST-Body stehen)
+	"/cart" -> (POST)	Fügt ein Proukt in den Warenkorb ein (Header: "Content-Type": "application/json", Body: "Product : JSON")
+	"/cart" -> (DELETE)	Löscht ein Proukt aus dem Warenkorb (Header: "Content-Type": "application/json", Body: "Product : JSON")
 */---------------------------------------------------------

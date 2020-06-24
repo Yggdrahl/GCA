@@ -25,4 +25,15 @@ public class CartService {
 	public List<Product> getAll() {
 		return this.cartRepo;
 	}
+	
+	public boolean remove(Product p) {
+				
+		for(int i = 0; i < this.cartRepo.size(); i++) {
+			if(this.cartRepo.get(i).id == p.id) {
+				this.cartRepo.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 }

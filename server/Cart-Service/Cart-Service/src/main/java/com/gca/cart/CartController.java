@@ -26,5 +26,11 @@ public class CartController {
 	public void insertIntoCart(@RequestBody Product product) {
 		cartService.add(product);
 	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/cart")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public void deleteFromCart(@RequestBody Product id) {
+		cartService.remove(id);
+	}
 
 }
