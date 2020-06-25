@@ -38,6 +38,8 @@ public class CheckoutService {
 	
 	private final OkHttpClient httpClient = new OkHttpClient();
 	
+	private Logger LOG = LoggerFactory.getLogger(CheckoutController.class);
+	
 	public List<Order> orders = new ArrayList<Order>(); //Alle Bestellungen
 	
 	private String ip = "localhost";
@@ -93,10 +95,10 @@ public class CheckoutService {
 			order.setShipping(shippingCosts);
 			order.setTracking(tracking);
 			order.setOrdernummer(ordernummer);
-			
+			System.out.println(order);
 			orders.add(order);
 			deleteCard();
-			
+			LOG.info("\n" + order);
 			return ordernummer;
 			
 			
@@ -151,11 +153,13 @@ public class CheckoutService {
 				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
+				LOG.error("couldn't parse http.body (JSON) to Object");
 				e.printStackTrace();
 			}
             
         } catch (IOException e) {
 			// TODO Auto-generated catch block
+        	LOG.error("couldn't get http.body response");
 			e.printStackTrace();
 		}
 		//---------------------------------------------------
@@ -194,10 +198,12 @@ public List<Product> getCatalog() {
 				}
 				
 			} catch (ParseException e) {
+				LOG.error("couldn't parse http.body (JSON) to Object");
 				e.printStackTrace();
 			}
             
         } catch (IOException e) {
+        	LOG.error("couldn't parse http.body (JSON) to Object");
 			e.printStackTrace();
 		}
 		//---------------------------------------------------
@@ -273,6 +279,7 @@ public List<Product> getCatalog() {
             
             
         } catch (IOException e) {
+        	LOG.error("couldn't parse http.body (JSON) to Object");
 			e.printStackTrace();
 		}
         //---------------------------------
@@ -318,6 +325,7 @@ public List<Product> getCatalog() {
 		        try (Response response = httpClient.newCall(request).execute()) {
 	            
 		        } catch (IOException e) {
+		        	LOG.error("couldn't parse http.body (JSON) to Object");
 					e.printStackTrace();
 				}
 		        //---------------------------------

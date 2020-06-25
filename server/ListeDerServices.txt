@@ -31,10 +31,41 @@ Zugriffe:
 Checkout-Service (Port:8083)
 
 JSON-Objekt:	{
-				Order.id		: int,
-				??				: WORK IN PROGRESS
-				} => JSONArray
-				
+				"cart": [
+						{
+						"id": 1,
+						"price": 149.98,
+						"name": "Vintage-Objektiv",
+						"image": "assets/images/products/camera-lens.jpg"
+						},
+						{
+						"id": 6,
+						"price": 21.98,
+						"name": "Plattenspieler",
+						"image": "assets/images/products/record-player.jpg"
+						},
+						{
+						"id": 8,
+						"price": 21.98,
+						"name": "Hollandrad",
+						"image": "assets/images/products/city-bike.jpg"
+						}
+				],
+				"sum": 193.94,
+				"shipping": 0.0,
+				"tracking": "asdf",
+				"ordernummer": 1305602,
+				"mail": "sadasdad@example.com",
+				"street": "qwertz",
+				"city": "Stadt",
+				"state": "Land",
+				"country": "asdf",
+				"month": "Juni",
+				"cvv": "asdf",
+				"year": 2020,
+				"zip": 45698,
+				"creditcard": 5484568
+				}
 
 Zugriffe:
 	"/??" -> WORK IN PROGRESS
