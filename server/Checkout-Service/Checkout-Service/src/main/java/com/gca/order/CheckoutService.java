@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +40,22 @@ public class CheckoutService {
 	
 	public List<Order> orders = new ArrayList<Order>(); //Alle Bestellungen
 	
+	private String ip = "localhost";
+	
+	public String getIp() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress().toString();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "localhost";
+		}
+	}
+
+	
 	public int checkout(Order order) {
+		
+		String ip = getIp();
 		
 		if(order == null) {
 			return -1;
@@ -58,8 +77,14 @@ public class CheckoutService {
 			actualCart = validateCart(cart);
 		}
 		
+		
 		if(actualCart != null) {
 			//Schritt 3 und Versandkosten bestimmen
+			
+			if(actualCart.size() <= 0) {
+				return -1;
+			}
+			
 			productCosts = getProductCosts(actualCart);
 			shippingCosts = getShippingcosts(productCosts);
 			tracking = getTracking();
@@ -68,6 +93,9 @@ public class CheckoutService {
 			order.setShipping(shippingCosts);
 			order.setTracking(tracking);
 			order.setOrdernummer(ordernummer);
+			
+			orders.add(order);
+			deleteCard();
 			
 			return ordernummer;
 			
@@ -86,9 +114,12 @@ public class CheckoutService {
 	public List<Product> getCart() {
 		
 		List<Product> currentCart = new ArrayList<Product>();
+		
+		String ip = getIp();
+		
 		//---------------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8084/cart")
+                .url("http://" + ip + ":8084/cart")
                 //.addHeader("Content-Type", "application/json")  // add request headers
                 .build();
 
@@ -135,9 +166,12 @@ public class CheckoutService {
 public List<Product> getCatalog() {
 		
 		List<Product> catalog = new ArrayList<Product>();
+		
+		String ip = getIp();
+		
 		//---------------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8081/products")
+                .url("http://" + ip + ":8081/products")
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -198,9 +232,12 @@ public List<Product> getCatalog() {
 	private double getShippingcosts(double orderSum) {
 	
 		double result = 10;
+		
+		String ip = getIp();
+		
 		//------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8082/getShippingCosts/?costs=" + orderSum)
+                .url("http://" + ip + ":8082/getShippingCosts/?costs=" + orderSum)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -248,6 +285,7 @@ public List<Product> getCatalog() {
 		int result;
 		boolean exists = false;
 		do {
+			exists = false;
 			result  = (int) (Math.random() * (1000000 - 100 + 1) + 1000000);
 			for(int i = 0; i < orders.size(); i++) {
 				if(orders.get(i).getOrdernummer() == result) {
@@ -257,6 +295,32 @@ public List<Product> getCatalog() {
 		} while(exists);
 		
 		return result;
+	}
+	
+	public Order getOrder(int ordNumber) {
+		
+		for(int i = 0; i < this.orders.size(); i++) {
+			if(this.orders.get(i).getOrdernummer() == ordNumber) {
+				return this.orders.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void deleteCard() {
+		String ip = getIp();
+		//------------------------------------------
+				Request request = new Request.Builder()
+		                .url("http://" + ip + ":8084/emptyCart")
+		                .delete()
+		                .build();
+
+		        try (Response response = httpClient.newCall(request).execute()) {
+	            
+		        } catch (IOException e) {
+					e.printStackTrace();
+				}
+		        //---------------------------------
 	}
 	
 	

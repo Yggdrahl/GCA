@@ -2,6 +2,8 @@ package com.gca.products;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,24 +17,29 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	private Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
 	@RequestMapping("/products")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Product> getAll() {
+		LOG.info("http.GET on '/products'");
 		return productService.getAll();
 	}
 
 	@RequestMapping("/product/")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public @ResponseBody Product getProduct(@RequestParam("id") int id) {
+		LOG.info("http.GET on '/product/'");
 		return productService.getProduct(id);
 	}
 
-	@RequestMapping("/product/{name}")
+	@RequestMapping("/product/{name}")									//Mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
 	public Product getProduct(@PathVariable("name") String name) {
 
 		if (name.matches("[0-9]+")) {
+			LOG.info("http.GET on '/product/{" + name + "}' | Could be Number or String" );
 			return productService.getProduct(Integer.valueOf(name));
 		} else {
 			return productService.getProduct(name);

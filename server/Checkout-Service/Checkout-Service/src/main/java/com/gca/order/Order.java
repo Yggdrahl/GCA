@@ -47,7 +47,7 @@ public class Order {
 				tmp = tmp + this.cart.get(i).getPrice(); 
 			}
 		}
-		return tmp;
+		return Math.round(tmp * 100.0) / 100.0;
 	}
 
 	//Getters and Setters
@@ -174,7 +174,32 @@ public class Order {
 	}
 	
 	
-	
+	public String toString() {
+		
+		String str = "";
+		
+		double total = this.sum + this.shipping;
+		
+		str = str + "Order-Nr.:\u0009" + this.ordernummer + "\n";
+		str = str + "-------------------------------------------------\nEinkauf:\n";
+		for(int i = 0; i < this.cart.size(); i++) {
+			str = str + "\u0009\u0009" + this.cart.get(i).name + "\u0009" + this.cart.get(i).price + " €\n";
+		}
+		str = str + "=======\n";
+		str = str + "\u0009" + this.sum + " €\n";
+		str = str + "+\u0009" + this.shipping + " €\n";
+		str = str + "(=)\u0009" + total + " €\n";
+		str = str + "-------------------------------------------------\n";
+		str = str + "Tracking-Nr.:\u0009" + this.tracking + "\n";
+		str = str + "Mail:\u0009\u0009" + this.mail + "\n";
+		str = str + "Lieferadresse:\u0009" + this.zip + " " +  this.street + " " + this.state + ", " + this.country + "\n";
+		str = str + "Zahlungsinformationen:\u0009\n";
+		str = str + "\u0009Credit-Nr.:\u0009" + this.creditcard + "\n";
+		str = str + "\u0009Gültig bis:\u0009" + this.month + " " + this.year + "\n";
+				
+		
+		return str;
+	}
 	
 	
 
