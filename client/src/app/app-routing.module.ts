@@ -6,9 +6,9 @@ import { OrderConfirmationComponent } from './components/order-confirmation/orde
 
 
 const routes: Routes = [
-  {path: 'product-view', component:ProductViewComponent},
+  {path: '', component:ProductViewComponent},
   {path: 'cart', component:CartComponent},
-  {path: 'orderConfirmation', component:OrderConfirmationComponent}
+  {path: 'order-confirmation', component:OrderConfirmationComponent}
 ];
 
 @NgModule({

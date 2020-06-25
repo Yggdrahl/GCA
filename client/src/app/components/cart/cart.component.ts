@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {stringify} from "querystring";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-cart',
@@ -13,12 +13,25 @@ export class CartComponent implements OnInit {
   urlCart = 'http://localhost:8084/cart';
   urlEmptyCart = 'http://localhost:8084/emptyCart';
   urlShipping = 'http://localhost:8082/getShippingCosts/?costs=';
+  urlOrder = 'http://localhost:8083/checkout';
   cartContent;
   totalPrice = 0;
   shippingCost = 0;
 
-  constructor(private http: HttpClient) {
+  mail: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  month: string;
+  cvv: string;
+  year: number;
+  zip: number;
+  creditcard: number;
+  order:any;
+  orderNumber;
 
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
     this.getCart();
   }
 
@@ -56,4 +69,26 @@ export class CartComponent implements OnInit {
       this.shippingCost = data;
     });
   }
+
+  sendOrder() {
+    this.order = {
+      mail: this.mail,
+      street: this.street,
+      city: this.city,
+      state: this.state,
+      country: this.country,
+      month: this.month,
+      cvv: this.cvv,
+      year: this.year,
+      zip: this.zip,
+      creditcard: this.creditcard
+    };
+    if (this.order != null) {
+      const headers = {'Content-Type': 'application/json'};
+      this.http.post(this.urlOrder, this.order, {headers}).subscribe((res) =>{
+      this.orderNumber= res;
+    });
+    }
+  }
+
 }

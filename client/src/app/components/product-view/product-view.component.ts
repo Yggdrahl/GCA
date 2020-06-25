@@ -17,6 +17,8 @@ export class ProductViewComponent implements OnInit {
   urlCart = 'http://localhost:8084/cart';
   products;
   cartSize; // Wie viele Artikel sind im Warenkorb (für die kleine Zahl am Einkaufswagen)
+  cart;
+  productVisible= true;
 
   constructor(private http: HttpClient) {
     this.http.get(this.urlCatalog).subscribe((data: any) => {
@@ -28,6 +30,16 @@ export class ProductViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+hiddeProduct(id: number){
+    for (var i=0; i<this.cart.length; i++)
+    {
+      if (this.cart[i].id===id)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * Fügt ein Produkt zum Warenkorb hinzu
@@ -39,7 +51,6 @@ export class ProductViewComponent implements OnInit {
     for (var i = 0; i < this.products.length; i++) {
       if (this.products[i].id === id) {
         product = this.products[i];
-
       }
     }
 
@@ -55,16 +66,17 @@ export class ProductViewComponent implements OnInit {
 
   }
 
+
+
   /**
    * Fragt das Array des aktuellen Warenkorbs an, um zu gucken, wie viele Einträge es gibt
    */
 getCartSize() {
   this.http.get(this.urlCart).subscribe((cart: any) => {
     this.cartSize = JSON.parse(JSON.stringify(cart)).length;
+    this.cart = JSON.parse(JSON.stringify(cart));
   });
 }
-
-
   /* //Wenn man die gleiche Funktion auch mit einem JSON Objekt erstellen würde (funktioniert durch html aber nicht)
   addToCart(product: JSON) {
     if (product != null) {
