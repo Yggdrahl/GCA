@@ -49,9 +49,9 @@ public class CheckoutController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/checkout")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public void checkout(@RequestBody Order order) {
+	public int checkout(@RequestBody Order order) {
 		LOG.info("http.POST on '/checkout'");
-		checkoutService.checkout(order);
+		return checkoutService.checkout(order);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/orders/{ordNumber}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
