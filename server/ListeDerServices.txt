@@ -68,7 +68,8 @@ JSON-Objekt:	{
 				}
 
 Zugriffe:
-	"/??" -> WORK IN PROGRESS
+	"/checkout" ->		(POST)	Rechnet die Bestellung ab und erstellt eine Bestellung (Order), die im Backend in der FakeDB gespeichert wird. Die ID der Bestellung wird zurückgegeben
+	"(orders/{id}" ->	(GET)	Gibt das gewünschte Order-JSON-Objektt zurück, wenn man den Teil "{id}" durch die Bestellnummer austauscht
 */---------------------------------------------------------
 
 /**---------------------------------------------------------

@@ -20,9 +20,9 @@ public class Order {
 	private String cvv; //
 	private int year;
 	private int zip;
-	private int creditcard;
+	private long creditcard;
 	
-	public Order(String mail, String street, String city, String state, String country, String month, String cvv, int year, int zip, int creditcard) {
+	public Order(String mail, String street, String city, String state, String country, String month, String cvv, int year, int zip, long creditcard) {
 		super();
 		//this.cart = cart;
 		//this.shipping = shipping;
@@ -165,11 +165,11 @@ public class Order {
 		this.zip = zip;
 	}
 
-	public int getCreditcard() {
+	public long getCreditcard() {
 		return creditcard;
 	}
 
-	public void setCreditcard(int creditcard) {
+	public void setCreditcard(long creditcard) {
 		this.creditcard = creditcard;
 	}
 	

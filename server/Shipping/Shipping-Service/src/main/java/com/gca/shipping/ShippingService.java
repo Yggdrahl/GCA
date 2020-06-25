@@ -15,7 +15,7 @@ public class ShippingService {
 	
 	public double getShippingCosts(double costs) {
 		
-		if(costs < 100) {
+		if(costs <= 100) {
 			return 10;
 		}
 		return 0;
