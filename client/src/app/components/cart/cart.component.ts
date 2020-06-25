@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getShippingCost();
   }
 
   sumPrice(cart: any) {
