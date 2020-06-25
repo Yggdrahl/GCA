@@ -53,6 +53,7 @@ JSON-Objekt:	{
 				],
 				"sum": 193.94,
 				"shipping": 0.0,
+				"totalSum": 193.94,
 				"tracking": "asdf",
 				"ordernummer": 1305602,
 				"mail": "sadasdad@example.com",

@@ -10,6 +10,7 @@ public class Order {
 	private double shipping;
 	private String tracking;
 	private int ordernummer;
+	private double totalSum;
 	
 	private String mail;
 	private String street;
@@ -59,6 +60,7 @@ public class Order {
 	public void setCart(List<Product> cart) {
 		this.cart = cart;
 		this.sum = calcSum();
+		this.totalSum = this.shipping + this.sum;
 	}
 
 	public double getShipping() {
@@ -67,6 +69,9 @@ public class Order {
 
 	public void setShipping(double shipping) {
 		this.shipping = shipping;
+		if(this.sum > 0) {
+			this.totalSum = this.shipping + this.sum;
+		}
 	}
 
 	public String getTracking() {
@@ -87,6 +92,10 @@ public class Order {
 	
 	public double getSum() {
 		return sum;
+	}
+	
+	public double getTotalSum() {
+		return this.totalSum;
 	}
 	
 	public void setSum(double sum) {
@@ -178,8 +187,6 @@ public class Order {
 		
 		String str = "";
 		
-		double total = this.sum + this.shipping;
-		
 		str = str + "Order-Nr.:\u0009" + this.ordernummer + "\n";
 		str = str + "-------------------------------------------------\nEinkauf:\n";
 		for(int i = 0; i < this.cart.size(); i++) {
@@ -188,7 +195,7 @@ public class Order {
 		str = str + "=======\n";
 		str = str + "\u0009" + this.sum + " €\n";
 		str = str + "+\u0009" + this.shipping + " €\n";
-		str = str + "(=)\u0009" + total + " €\n";
+		str = str + "(=)\u0009" + this.totalSum + " €\n";
 		str = str + "-------------------------------------------------\n";
 		str = str + "Tracking-Nr.:\u0009" + this.tracking + "\n";
 		str = str + "Mail:\u0009\u0009" + this.mail + "\n";
