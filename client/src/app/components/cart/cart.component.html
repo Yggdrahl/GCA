@@ -92,9 +92,9 @@
             <option value="1">{{date}}</option>
             <option value="2">{{date + 1}}</option>
             <option value="3">{{date + 2}}</option>
-            <option value="4">{{date + 2}}</option>
+            <option value="4">{{date + 3}}</option>
             <option value="5">{{date + 4}}</option>
-            <option value="5">{{date + 5}}</option>
+            <option value="6">{{date + 5}}</option>
           </select>
         </div>
         <div class="col-md-2 mb-3">
@@ -104,9 +104,7 @@
         </div>
       </div>
       <div class="form-row center-contents last-row">
-        <a routerLink="/order-confirmation">
           <button mat-button class="btn btn-info" type="submit" (click)="sendOrder()">Place order</button>
-        </a>
       </div>
     </form>
   </div>

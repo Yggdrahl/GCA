@@ -32,10 +32,66 @@ public class Order {
 		this.street = street;
 		this.city = city;
 		this.state = state;
-		this.country = country;
-		this.month = month;
+		this.country = country; 
+		switch(month) {
+		case "1":
+			this.month = "January";
+			break;
+		case "2":
+			this.month = "February";
+			break;
+		case "3":
+			this.month = "March";
+			break;
+		case "4":
+			this.month = "April";
+			break;
+		case "5":
+			this.month = "May";
+			break;
+		case "6":
+			this.month = "June";
+			break;
+		case "7":
+			this.month = "July";
+			break;
+		case "8":
+			this.month = "August";
+			break;
+		case "9":
+			this.month = "September";
+			break;
+		case "10":
+			this.month = "October";
+			break;
+		case "11":
+			this.month = "November";
+			break;
+		case "12":
+			this.month = "December";
+			break;
+		}
 		this.cvv = cvv;
-		this.year = year;
+		switch (year) {
+		case 1:
+			this.year = 2020;
+			break;
+		case 2:
+			this.year = 2021;
+			break;
+		case 3:
+			this.year = 2022;
+			break;
+		case 4:
+			this.year = 2023;
+			break;
+		case 5:
+			this.year = 2024;
+			break;
+		case 6: 
+			this.year = 2025;
+			break;
+		}
 		this.zip = zip;
 		this.creditcard = creditcard;
 		

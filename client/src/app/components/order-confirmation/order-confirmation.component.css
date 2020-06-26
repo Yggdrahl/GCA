@@ -1,0 +1,86 @@
+.topImage
+{
+  width: 100%;
+}
+
+.order{
+  position: relative;
+}
+
+h1
+{
+  margin-left: 200px;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 24pt;
+  margin-bottom: 20px;
+}
+
+.productContainer
+{
+  margin-left: 200px;
+  background-color: rgba(211, 211, 211, 0.42);
+  padding: 10px;
+  width: 620px;
+}
+
+.productImage {
+
+  width: 300px;
+  height: 192px;
+}
+
+.orderContent
+{
+  background-color: white;
+  width: 600px;
+  position: relative;
+  margin-bottom: 25px;
+}
+.name {
+  position: absolute;
+  font-size: 16pt;
+  margin-left: 15px;
+  font-weight: bold;
+  top: 77px;
+}
+
+.price {
+  position: absolute;
+  padding-left: 315px;
+  margin-top: -70px;
+  font-weight: bold;
+  font-size: 16pt;
+}
+
+.shippingCost
+{
+  font-size: 13pt;
+  text-align: center;
+  color: #6c757d
+}
+
+.totalCost
+{
+  text-align: center;
+  font-size: 16pt;
+}
+
+
+.totalPrice
+{
+  font-weight: bold;
+}
+
+.orderDetails
+{
+  right: 400px;
+  top: 50px;
+  position: absolute;
+  font-size: 16pt;
+}
+
+h2{
+  font-weight: bold;
+  font-size: 20pt;
+}
