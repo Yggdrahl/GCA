@@ -1,11 +1,14 @@
 package com.gca.cart;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartController {
 	
 	private Logger LOG = LoggerFactory.getLogger(CartController.class);
+	private String authPW = "testpw";
 	
 	@Autowired
 	private CartService cartService;
@@ -46,6 +50,41 @@ public class CartController {
 	public void deleteCart() {
 		LOG.info("http.DELETE on '/emptyCart' (empties the whole cart)");
 		cartService.removeAll();
+	}
+	
+	@GetMapping("/validate") //Kleiner Test-Endpunkt
+	@CrossOrigin(origins = "http://localhost:4200")
+	//public String validate(@RequestHeader("Authorization") String Authorization, HttpServletRequest request )  {
+	public List<Product> validate(HttpServletRequest request)  {
+		
+		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+		if(authorization(request)) {
+			LOG.info("Authentification correct");
+			
+			List<Product> liste = new ArrayList<Product>();
+			liste.add(new Product(99, 99.99, "teures Ding", ""));
+			
+			return liste;
+		}
+		LOG.error("Authentification incorrect");
+		return null;
+		
+		
+	}
+	
+	public boolean authorization(HttpServletRequest request) {
+		if(request.getHeader("Authorization") != null) {
+			
+			String header = request.getHeader("Authorization");
+				
+			if(header.equals(authPW) || header.equals("ng")) {
+				return true;
+			} else {
+				return false;
+			}
+				
+		}
+		return false;
 	}
 
 }
