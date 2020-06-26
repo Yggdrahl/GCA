@@ -1,3 +1,4 @@
+<html>
 <img class="topImage" src="assets/images/header/HeroBannerImage2.png">
 <div class="order">
 <div *ngIf="order">
@@ -15,17 +16,26 @@
   </div>
   <div class="orderDetails">
     <h2>Order Details:</h2>
-    <p>Order Number: {{order.ordernummer}}</p>
-    <p>Tracking Number: {{order.tracking}}</p>
+    <p><span class="bold">Order Number:</span>
+      {{order.ordernummer}}</p>
+    <p><span class="bold">Tracking Number:</span><br>
+      {{order.tracking}}</p><br>
 
     <h2>Personal Details:</h2>
-    <p>E-Mail: {{order.mail}}</p>
-    <p>Street Address: {{order.street}}<br>
-      {{order.zip}} {{order.city}}, {{order.state}}, {{order.country}}</p>
+    <p><span class="bold">E-Mail:</span>
+      {{order.mail}}<br></p>
+      <p><span class="bold">Street Address:</span><br>
+      {{order.street}}<br>
+      {{order.zip}} {{order.city}}<br>
+        {{order.state}}<br>
+        {{order.country}}</p><br>
 
     <h2>Payment Details:</h2>
-    <p>Credit Card Number: {{order.creditcard}}</p>
-    <p>Expires: {{order.month}} {{order.year}}</p>
+    <p><span class="bold">Credit Card Number:</span>
+      {{order.creditcard}}</p>
+      <p><span class="bold">Expires:</span>
+      {{order.month}} {{order.year}}</p>
   </div>
 </div>
 </div>
+</html>

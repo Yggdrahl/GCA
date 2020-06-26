@@ -21,9 +21,9 @@ public class Order {
 	private String cvv; //
 	private int year;
 	private int zip;
-	private long creditcard;
+	private String creditcard;
 	
-	public Order(String mail, String street, String city, String state, String country, String month, String cvv, int year, int zip, long creditcard) {
+	public Order(String mail, String street, String city, String state, String country, String month, String cvv, int year, int zip, String creditcard) {
 		super();
 		//this.cart = cart;
 		//this.shipping = shipping;
@@ -230,11 +230,11 @@ public class Order {
 		this.zip = zip;
 	}
 
-	public long getCreditcard() {
+	public String getCreditcard() {
 		return creditcard;
 	}
 
-	public void setCreditcard(long creditcard) {
+	public void setCreditcard(String creditcard) {
 		this.creditcard = creditcard;
 	}
 	
