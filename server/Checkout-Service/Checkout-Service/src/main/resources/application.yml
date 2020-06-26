@@ -14,8 +14,6 @@ resilience4j:
                 - org.springframework.web.client.HttpServerErrorException
                 - java.util.concurrent.TimeoutException
                 - java.io.IOException
-                - java.net.ConnectException
-                - org.springframework.web.client.RestClientException
     instances:
       mainService:
         baseConfig: default

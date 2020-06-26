@@ -20,14 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
 @RestController
 public class CheckoutController {
 	
@@ -40,7 +39,6 @@ public class CheckoutController {
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
-		
 	
 	private Logger LOG = LoggerFactory.getLogger(CheckoutController.class);
 	private static final String MAIN_SERVICE = "mainService";
@@ -69,10 +67,10 @@ public class CheckoutController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/checkout")
 	@CrossOrigin(origins = "http://localhost:4200")
-	@CircuitBreaker(name = MAIN_SERVICE, fallbackMethod = "test")
+	@CircuitBreaker(name = MAIN_SERVICE)
 	public int checkout(@RequestBody Order order) {
 		LOG.info("http.POST on '/checkout'");
-		restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
+		//restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
 		
 		
 		//Response response = new OkHttpClient().newCall(new Request.Builder().url("http://" + ip + ":8084/cart").build()).execute();
@@ -81,24 +79,15 @@ public class CheckoutController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/orders/{ordNumber}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
-	@CircuitBreaker(name = MAIN_SERVICE, fallbackMethod = "fallback")
+	@CircuitBreaker(name = MAIN_SERVICE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Order getOrder(@PathVariable("ordNumber") int ordNumber) {
 		LOG.info("http.GET on '/orders/{" + ordNumber + "}'");
-		try {
-			restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
-		} catch (RestClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return checkoutService.getOrder(ordNumber);
+		//return restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
 	}
 	
-	private Order fallback(Exception e) {
-		LOG.error("#################### Pech!!!!!!!!!!!!!!!");
-		return null;
-	}
 	
 //	private ResponseEntity<String> test(Exception e) {
 //		return new ResponseEntity<String>("hallo", null);

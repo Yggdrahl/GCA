@@ -118,7 +118,7 @@ public class CheckoutService {
 		
 		String ip = getIp();
 		
-		//---------------------------------------------------
+		//---------------------------------------------------/*
 		Request request = new Request.Builder()
                 .url("http://" + ip + ":8084/cart")
                 //.addHeader("Content-Type", "application/json")  // add request headers
