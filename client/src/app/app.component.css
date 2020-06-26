@@ -3,3 +3,9 @@ div
   margin:0 0.5%;
   background-color: ghostwhite;
 }
+
+div > div
+{
+  margin:0;
+  min-height: 885px;
+}

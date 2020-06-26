@@ -1,1 +1,41 @@
+<html>
+<img class="topImage" src="assets/images/header/HeroBannerImage2.png">
+<div class="order">
+<div *ngIf="order">
+  <h1>Order Confirmation</h1>
+  <div class="productContainer">
+    <div *ngFor="let orderContent of order.cart">
+      <p class="orderContent">
+        <img class="productImage" src="{{orderContent.image}}">
+        <span class="name">{{orderContent.name}}</span><br>
+        <span class="price">{{orderContent.price}}</span>
+      </p>
+    </div>
+    <p class="shippingCost">Shipping Cost: {{order.shipping}}</p>
+    <p class="totalCost"><span class="totalPrice">Total Cost {{order.sum+order.shipping}} €</span></p>
+  </div>
+  <div class="orderDetails">
+    <h2>Order Details:</h2>
+    <p><span class="bold">Order Number:</span>
+      {{order.ordernummer}}</p>
+    <p><span class="bold">Tracking Number:</span><br>
+      {{order.tracking}}</p><br>
 
+    <h2>Personal Details:</h2>
+    <p><span class="bold">E-Mail:</span>
+      {{order.mail}}<br></p>
+      <p><span class="bold">Street Address:</span><br>
+      {{order.street}}<br>
+      {{order.zip}} {{order.city}}<br>
+        {{order.state}}<br>
+        {{order.country}}</p><br>
+
+    <h2>Payment Details:</h2>
+    <p><span class="bold">Credit Card Number:</span>
+      {{order.creditcard}}</p>
+      <p><span class="bold">Expires:</span>
+      {{order.month}} {{order.year}}</p>
+  </div>
+</div>
+</div>
+</html>

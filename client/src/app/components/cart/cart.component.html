@@ -23,12 +23,12 @@
   <div class="col-12 col-lg-8 offset-lg-2">
     <h3 class="checkoutText">Checkout</h3>
 
-    <form method="post">
+    <form ngNativeValidate>
       <div class="form-row">
         <div class="col-md-5 mb-3">
           <label for="email">E-mail Address</label>
           <input type="email" [(ngModel)]="mail" class="form-control" id="email"
-                 name="email" required>
+                 name="email" placeholder= "someone@example.com" required>
         </div>
         <div class="col-md-5 mb-3">
           <label for="street_address">Street Address</label>
@@ -38,20 +38,18 @@
         <div class="col-md-2 mb-3">
           <label for="zip_code">Zip Code</label>
           <input type="text" [(ngModel)]="zip" class="form-control"
-                 name="zip_code" id="zip_code" placeholder="94043" required pattern="\d{4,5}">
+                 name="zip_code" id="zip_code" placeholder="12345" required pattern="\d{4,5}">
         </div>
 
       </div>
       <div class="form-row">
         <div class="col-md-5 mb-3">
           <label for="city">City</label>
-          <input type="text" [(ngModel)]="city" class="form-control" name="city" id="city"
-                 placeholder="Mountain View" required>
+          <input type="text" [(ngModel)]="city" class="form-control" name="city" id="city" placeholder="Mountain View" required>
         </div>
         <div class="col-md-2 mb-3">
           <label for="state">State</label>
-          <input type="text" [(ngModel)]="state" class="form-control" name="state" id="state"
-                 placeholder="CA" required>
+          <input type="text" [(ngModel)]="state" class="form-control" name="state" id="state" placeholder="CA" required>
         </div>
         <div class="col-md-5 mb-3">
           <label for="country">Country</label>
@@ -71,7 +69,7 @@
         <div class="col-md-2 mb-3">
           <label for="credit_card_expiration_month">Month</label>
           <select name="credit_card_expiration_month" [(ngModel)]="month" id="credit_card_expiration_month"
-                  class="form-control">
+                  class="form-control" required>
             <option value="1">Jan</option>
             <option value="2">Feb</option>
             <option value="3">Mar</option>
@@ -88,13 +86,13 @@
         </div>
         <div class="col-md-2 mb-3">
           <label>Year</label>
-          <select name="credit_card_expiration_year" [(ngModel)]="year" class="form-control">
+          <select name="credit_card_expiration_year" [(ngModel)]="year" class="form-control" required>
             <option value="1">{{date}}</option>
             <option value="2">{{date + 1}}</option>
             <option value="3">{{date + 2}}</option>
-            <option value="4">{{date + 2}}</option>
+            <option value="4">{{date + 3}}</option>
             <option value="5">{{date + 4}}</option>
-            <option value="5">{{date + 5}}</option>
+            <option value="6">{{date + 5}}</option>
           </select>
         </div>
         <div class="col-md-2 mb-3">
@@ -104,9 +102,7 @@
         </div>
       </div>
       <div class="form-row center-contents last-row">
-        <a routerLink="/order-confirmation">
           <button mat-button class="btn btn-info" type="submit" (click)="sendOrder()">Place order</button>
-        </a>
       </div>
     </form>
   </div>

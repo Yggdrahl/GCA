@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {OrderConfirmationComponent} from "../order-confirmation/order-confirmation.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -31,7 +32,7 @@ export class CartComponent implements OnInit {
   order:any;
   orderNumber;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getCart();
   }
 
@@ -57,7 +58,6 @@ export class CartComponent implements OnInit {
 
 
   deleteCart() {
-    const headers = {'Content-Type': 'application/json'};
     this.http.delete(this.urlEmptyCart).subscribe(data => {
       this.getCart();
       this.sumPrice(this.cartContent);
@@ -85,10 +85,12 @@ export class CartComponent implements OnInit {
     };
     if (this.order != null) {
       const headers = {'Content-Type': 'application/json'};
-      this.http.post(this.urlOrder, this.order, {headers}).subscribe((res) =>{
-      this.orderNumber= res;
-    });
+      this.http.post(this.urlOrder, this.order, {headers}).subscribe((res) => {
+        this.orderNumber = res;
+        OrderConfirmationComponent.prototype.setOrderNumber(this.orderNumber);
+        this.router.navigate(["/order-confirmation"]);
+      });
     }
-  }
 
+  }
 }
