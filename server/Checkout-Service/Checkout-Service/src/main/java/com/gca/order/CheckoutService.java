@@ -6,10 +6,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-
-
 import okhttp3.*;
 
 import java.io.IOException;
@@ -36,7 +35,8 @@ public class CheckoutService {
 	 * [X] Gibt Order-Informationen aus.
 	 */
 	
-	private final OkHttpClient httpClient = new OkHttpClient();
+	
+	final OkHttpClient httpClient = new OkHttpClient();
 	
 	private Logger LOG = LoggerFactory.getLogger(CheckoutController.class);
 	
@@ -54,7 +54,6 @@ public class CheckoutService {
 		}
 	}
 
-	
 	public int checkout(Order order) {
 		
 		String ip = getIp();
@@ -330,6 +329,9 @@ public List<Product> getCatalog() {
 				}
 		        //---------------------------------
 	}
+	
+	//Resiliennce
+	
 	
 	
 	
