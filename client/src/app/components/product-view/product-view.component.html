@@ -6,13 +6,16 @@
   </div>
   <section>
     <div *ngFor="let product of products" class="allProducts" >
+      <div [hidden]="hiddeProduct(product.id)" (click)="addToCart(product.id)">
       <img src="{{product.image}}" class="productImage">
         <br>
-        <div class="productInfo" (click)="addToCart(product.id)">
+        <div class="productInfo">
           <p class="productName">{{product.name}}</p>
           <p class="productPrice">{{product.price}} €</p>
       </div>
     </div>
+    </div>
+    <p class="alert" *ngIf="cart && products && cart.length == products.length">Alle Produkte befinden sich im Warenkorb!</p>
   </section>
 </div>
 

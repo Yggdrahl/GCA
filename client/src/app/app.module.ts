@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 /*Kommunikation mit dem Backend*/
 import { HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 /* Import Materials*/
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +22,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProductViewComponent } from './components/product-view/product-view.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { OrderConfirmationComponent } from './components/order-confirmation/orde
     MatToolbarModule,
     MatIconModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
