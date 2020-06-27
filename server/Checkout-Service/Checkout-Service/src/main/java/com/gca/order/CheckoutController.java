@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -38,14 +45,21 @@ public class CheckoutController {
 	private CheckoutService checkoutService;
 	@Autowired
 	private RestTemplate restTemplate;
-		
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
+	
+	
+	
+	//Timeout
+	 @Bean
+	    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder){
+	        return restTemplateBuilder
+	                .setConnectTimeout(Duration.ofSeconds(3))
+	                .setReadTimeout(Duration.ofSeconds(3))
+	                .build();
+	    }
+	
 	
 	private Logger LOG = LoggerFactory.getLogger(CheckoutController.class);
-	private static final String MAIN_SERVICE = "mainService";
+	//private static final String MAIN_SERVICE = "mainService";
 	
 	private String ip = "localhost";
 	
@@ -62,7 +76,16 @@ public class CheckoutController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/checkout")
 	@CrossOrigin(origins = "http://localhost:4200")
-	@CircuitBreaker(name = MAIN_SERVICE)
+	//@CircuitBreaker(name = MAIN_SERVICE)
+	@RateLimiter(name = "stockService", fallbackMethod = "getFallbackStocks")
+	@HystrixCommand(
+			fallbackMethod = "getFallbackCheckout",
+			threadPoolKey = "checkpoutPool",
+			threadPoolProperties = {
+					@HystrixProperty(name = "coreSize", value = "20"), // Wie viele Threads sollen höchstens auf eine Antwort von checkout warten
+					@HystrixProperty(name = "maxQueueSize", value = "10") // Wie viele sollen höchstens in der Warteschlange warten, bevor die zugang auf den Thread bekommen 
+			}
+			)
 	public int checkout(HttpServletRequest request, @RequestBody Order order) {
 		//LOG.info("http.POST on '/checkout'");
 		
@@ -77,16 +100,26 @@ public class CheckoutController {
 			return checkoutService.checkout(order);
 		}
 		LOG.error("Authentification incorrect");
-		return -1;
-		
-		
+		return -1;	
+	}
+	/*Funktioniert noch nicht
+	 	public int getFallbackStocks(Exception e) {
+		return checkoutService.checkout(order); 
+	}*/
+	//Bin mir nicht sicher, ob das klappen wird zum Testen kam ich noch nicht
+	public String getFallbackCheckout(HttpServletRequest request, @RequestBody Order order) {
+		return "No Checkout";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/orders/{ordNumber}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
-	@CircuitBreaker(name = MAIN_SERVICE)
+	//@CircuitBreaker(name = MAIN_SERVICE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
+	@HystrixCommand(
+			fallbackMethod = "getFallbackOrder",
+			threadPoolKey = "checkpoutPool"
+			)
 	public Order getOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
 		//LOG.info("http.GET on '/orders/{" + ordNumber + "}'");
 		//return checkoutService.getOrder(ordNumber);
@@ -99,6 +132,10 @@ public class CheckoutController {
 		}
 		LOG.error("Authentification incorrect");
 		return null;
+	}
+	//Bin mir nicht sicher, ob das klappen wird zum Testen kam ich noch nicht
+	public String getFallbackOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
+		return "No order";
 	}
 	
 	

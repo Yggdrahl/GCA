@@ -55,8 +55,8 @@ export class CartComponent implements OnInit {
     this.http.get(this.urlCart, { headers }).subscribe((data: any) => {
       this.cartContent = JSON.parse(JSON.stringify(data));
       this.sumPrice(this.cartContent);
+      this.getShippingCost();
     });
-    this.getShippingCost();
   }
 
 
@@ -112,6 +112,5 @@ export class CartComponent implements OnInit {
         this.router.navigate(["/order-confirmation"]);
       });
     }
-
   }
 }
