@@ -2,6 +2,8 @@ package com.gca.products;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProductController {
-
+	
+	private String authPW = "testpw";
+	
 	@Autowired
 	private ProductService productService;
 	
 	private Logger LOG = LoggerFactory.getLogger(ProductController.class);
+	
 
 	@RequestMapping("/products")
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -45,6 +50,22 @@ public class ProductController {
 			return productService.getProduct(name);
 		}
 
+	}
+	
+	
+	public boolean authorization(HttpServletRequest request) {
+		if(request.getHeader("Authorization") != null) {
+			
+			String header = request.getHeader("Authorization");
+				
+			if(header.equals(authPW) || header.equals("ng")) {
+				return true;
+			} else {
+				return false;
+			}
+				
+		}
+		return false;
 	}
 
 }

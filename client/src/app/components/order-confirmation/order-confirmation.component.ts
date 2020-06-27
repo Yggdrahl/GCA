@@ -12,6 +12,7 @@ export class OrderConfirmationComponent implements OnInit {
   orderNumber;
   order;
   urlOrder = 'http://localhost:8083/orders';
+  authPW :String = 'ng';
 
   constructor(private http: HttpClient) {
     if(this.orderNumber != null){
@@ -28,8 +29,9 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   getOrder() {
+    const headers = {'Authorization':""+this.authPW};
       this.urlOrder = this.urlOrder + "/" + this.orderNumber;
-      this.http.get(this.urlOrder).subscribe((order) => {
+      this.http.get(this.urlOrder, { headers }).subscribe((order) => {
         this.order = JSON.parse(JSON.stringify(order));
       });
   }

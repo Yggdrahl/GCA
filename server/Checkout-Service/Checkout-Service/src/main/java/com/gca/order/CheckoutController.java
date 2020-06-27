@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,13 @@ import okhttp3.Response;
 @RestController
 public class CheckoutController {
 	
+	private String authPW = "testpw";
+	
 	@Autowired
 	private CheckoutService checkoutService;
 	@Autowired
 	private RestTemplate restTemplate;
-	
+		
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
@@ -45,15 +49,6 @@ public class CheckoutController {
 	
 	private String ip = "localhost";
 	
-//	@RequestMapping(
-//		    value = "/checkout", 
-//		    method = RequestMethod.POST)
-//		public void process(@RequestBody Map<String, Object> payload) 
-//		    throws Exception {
-//
-//		  System.out.println(payload);
-//
-//		}
 	@Bean
 	private void IpLoader() {
 		try {
@@ -68,13 +63,23 @@ public class CheckoutController {
 	@RequestMapping(method = RequestMethod.POST, value = "/checkout")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@CircuitBreaker(name = MAIN_SERVICE)
-	public int checkout(@RequestBody Order order) {
-		LOG.info("http.POST on '/checkout'");
+	public int checkout(HttpServletRequest request, @RequestBody Order order) {
+		//LOG.info("http.POST on '/checkout'");
+		
 		//restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
-		
-		
 		//Response response = new OkHttpClient().newCall(new Request.Builder().url("http://" + ip + ":8084/cart").build()).execute();
-		return checkoutService.checkout(order);
+		
+		//return checkoutService.checkout(order);
+		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+		if(authorization(request)) {
+			LOG.info("Authentification correct");
+						
+			return checkoutService.checkout(order);
+		}
+		LOG.error("Authentification incorrect");
+		return -1;
+		
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/orders/{ordNumber}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
@@ -82,16 +87,41 @@ public class CheckoutController {
 	@CircuitBreaker(name = MAIN_SERVICE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Order getOrder(@PathVariable("ordNumber") int ordNumber) {
-		LOG.info("http.GET on '/orders/{" + ordNumber + "}'");
-		return checkoutService.getOrder(ordNumber);
+	public Order getOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
+		//LOG.info("http.GET on '/orders/{" + ordNumber + "}'");
+		//return checkoutService.getOrder(ordNumber);
 		//return restTemplate.getForObject(("http://" + ip + ":8084/ping"), String.class);
+		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+		if(authorization(request)) {
+			LOG.info("Authentification correct");
+						
+			return checkoutService.getOrder(ordNumber);
+		}
+		LOG.error("Authentification incorrect");
+		return null;
 	}
 	
 	
 //	private ResponseEntity<String> test(Exception e) {
 //		return new ResponseEntity<String>("hallo", null);
 //	}
+	
+	
+	public boolean authorization(HttpServletRequest request) {
+		
+		if(request.getHeader("Authorization") != null) {
+			
+			String header = request.getHeader("Authorization");
+			
+			if(header.equals(authPW) || header.equals("ng")) {
+				return true;
+			} else {
+				return false;
+			}
+				
+		}
+		return false;
+	}
 	
 	
 

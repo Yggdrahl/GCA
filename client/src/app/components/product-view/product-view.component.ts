@@ -18,7 +18,8 @@ export class ProductViewComponent implements OnInit {
   products;
   cartSize; // Wie viele Artikel sind im Warenkorb (für die kleine Zahl am Einkaufswagen)
   cart;
-  productVisible= true;
+  productVisible= true; //Obsolete
+  authPW :String = 'ng';
 
   constructor(private http: HttpClient) {
     this.http.get(this.urlCatalog).subscribe((data: any) => {
@@ -31,6 +32,7 @@ export class ProductViewComponent implements OnInit {
   }
 
 hiddeProduct(id: number){
+  if(this.cart) {
     for (var i=0; i<this.cart.length; i++)
     {
       if (this.cart[i].id===id)
@@ -39,6 +41,8 @@ hiddeProduct(id: number){
       }
     }
     return false;
+  }
+  return false;
   }
 
   /**
@@ -55,7 +59,7 @@ hiddeProduct(id: number){
     }
 
     if (product != null) {
-      const headers = { 'Content-Type': 'application/json' };
+      const headers = { 'Content-Type': 'application/json', 'Authorization':""+this.authPW};
       // const body = { id:99, price:199.99, name:"Teekanne", imag:null }; //Wenn man das JSON "hardcodet"
       // const body = JSON.parse(JSON.stringify('{"id":80,"price":149.98,"name":"Camera","image":null}')); //Wenn das JSON aus einem String erzeugt wird
       // const body = this.products[0]; //Wenn das JSON aus dem Catalog-Array kommt
@@ -72,7 +76,8 @@ hiddeProduct(id: number){
    * Fragt das Array des aktuellen Warenkorbs an, um zu gucken, wie viele Einträge es gibt
    */
 getCartSize() {
-  this.http.get(this.urlCart).subscribe((cart: any) => {
+  const headers = {'Authorization':""+this.authPW};
+  this.http.get(this.urlCart, { headers }).subscribe((cart: any) => {
     this.cartSize = JSON.parse(JSON.stringify(cart)).length;
     this.cart = JSON.parse(JSON.stringify(cart));
   });

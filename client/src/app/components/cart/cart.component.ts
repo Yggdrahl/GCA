@@ -31,6 +31,7 @@ export class CartComponent implements OnInit {
   creditcard: number;
   order:any;
   orderNumber;
+  authPW :String = 'ng';
 
   constructor(private http: HttpClient, private router: Router) {
     this.getCart();
@@ -49,7 +50,8 @@ export class CartComponent implements OnInit {
   }
 
   getCart() {
-    this.http.get(this.urlCart).subscribe((data: any) => {
+    const headers = {'Authorization':""+this.authPW};
+    this.http.get(this.urlCart, { headers }).subscribe((data: any) => {
       this.cartContent = JSON.parse(JSON.stringify(data));
       this.sumPrice(this.cartContent);
     });
@@ -58,14 +60,16 @@ export class CartComponent implements OnInit {
 
 
   deleteCart() {
-    this.http.delete(this.urlEmptyCart).subscribe(data => {
+    const headers = {'Authorization':""+this.authPW};
+    this.http.delete(this.urlEmptyCart, { headers }).subscribe(data => {
       this.getCart();
       this.sumPrice(this.cartContent);
     });
   }
 
   getShippingCost() {
-    this.http.get(this.urlShipping + this.totalPrice).subscribe((data: any) => {
+    const headers = {'Authorization':""+this.authPW};
+    this.http.get((this.urlShipping + this.totalPrice), { headers }).subscribe((data: any) => {
       this.shippingCost = data;
     });
   }
@@ -84,7 +88,7 @@ export class CartComponent implements OnInit {
       creditcard: this.creditcard
     };
     if (this.order != null) {
-      const headers = {'Content-Type': 'application/json'};
+      const headers = {'Content-Type': 'application/json', 'Authorization': ""+this.authPW};
       this.http.post(this.urlOrder, this.order, {headers}).subscribe((res) => {
         this.orderNumber = res;
         OrderConfirmationComponent.prototype.setOrderNumber(this.orderNumber);
