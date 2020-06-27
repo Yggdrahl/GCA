@@ -8,10 +8,10 @@
       <p class="orderContent">
         <img class="productImage" src="{{orderContent.image}}">
         <span class="name">{{orderContent.name}}</span><br>
-        <span class="price">{{orderContent.price}}</span>
+        <span class="price">{{orderContent.price}} €</span>
       </p>
     </div>
-    <p class="shippingCost">Shipping Cost: {{order.shipping}}</p>
+    <p class="shippingCost">Shipping Cost: {{order.shipping}} €</p>
     <p class="totalCost"><span class="totalPrice">Total Cost {{order.sum+order.shipping}} €</span></p>
   </div>
   <div class="orderDetails">

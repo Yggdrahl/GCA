@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   order:any;
   orderNumber;
   authPW :String = 'ng';
+  orderButtonBool : Boolean = true;
 
   constructor(private http: HttpClient, private router: Router) {
     this.getCart();
@@ -72,6 +73,22 @@ export class CartComponent implements OnInit {
     this.http.get((this.urlShipping + this.totalPrice), { headers }).subscribe((data: any) => {
       this.shippingCost = data;
     });
+  }
+
+  checkFormContent() {
+    var activateButton : Boolean =
+    this.mail != "" && this.mail != null &&
+    this.street != "" && this.street != null &&
+    this.city != "" && this.city != null &&
+    this.state != "" && this.state != null &&
+    this.country != "" && this.country != null &&
+    this.month != "" && this.month != null &&
+    this.cvv != "" && this.cvv != null &&
+    this.year != null &&
+    this.zip != null &&
+    this.creditcard != null;
+
+    this.orderButtonBool = !activateButton;
   }
 
   sendOrder() {

@@ -14,7 +14,7 @@
       <span class="price">{{cartContent.price}} €</span>
     </p>
   </div>
-  <p class="shippingCost" *ngIf="cartContent && cartContent.length > 0">Shipping Cost: {{shippingCost}}</p>
+  <p class="shippingCost" *ngIf="cartContent && cartContent.length > 0">Shipping Cost: {{shippingCost}} €</p>
   <p class="totalCost" *ngIf="cartContent && cartContent.length > 0">Total Cost: <span
     class="totalPrice"> {{(totalPrice + shippingCost).toFixed(2)}} €</span></p>
 </div>
@@ -28,48 +28,50 @@
         <div class="col-md-5 mb-3">
           <label for="email">E-mail Address</label>
           <input type="email" [(ngModel)]="mail" class="form-control" id="email"
-                 name="email" placeholder= "someone@example.com" required>
+                 name="email" placeholder= "someone@example.com" (keyup)="checkFormContent()" required>
         </div>
         <div class="col-md-5 mb-3">
           <label for="street_address">Street Address</label>
           <input type="text" [(ngModel)]="street" class="form-control" name="street_address"
-                 id="street_address" placeholder="1600 Amphitheatre Parkway" required>
+                 id="street_address" placeholder="1600 Amphitheatre Parkway" (keyup)="checkFormContent()" required>
         </div>
         <div class="col-md-2 mb-3">
           <label for="zip_code">Zip Code</label>
-          <input type="text" [(ngModel)]="zip" class="form-control"
-                 name="zip_code" id="zip_code" placeholder="12345" required pattern="\d{4,5}">
+          <input type="number" [(ngModel)]="zip" class="form-control"
+                 name="zip_code" id="zip_code" placeholder="12345" (keyup)="checkFormContent()" required pattern="\d{4,5}"  max="99999">
         </div>
 
       </div>
       <div class="form-row">
         <div class="col-md-5 mb-3">
           <label for="city">City</label>
-          <input type="text" [(ngModel)]="city" class="form-control" name="city" id="city" placeholder="Mountain View" required>
+          <input type="text" [(ngModel)]="city" class="form-control" name="city" id="city" placeholder="Mountain View" (keyup)="checkFormContent()" required>
         </div>
         <div class="col-md-2 mb-3">
           <label for="state">State</label>
-          <input type="text" [(ngModel)]="state" class="form-control" name="state" id="state" placeholder="CA" required>
+          <input type="text" [(ngModel)]="state" class="form-control" name="state" id="state" placeholder="CA" (keyup)="checkFormContent()" required>
         </div>
         <div class="col-md-5 mb-3">
           <label for="country">Country</label>
           <input type="text" [(ngModel)]="country" class="form-control" id="country"
                  placeholder="Country Name"
-                 name="country" required>
+                 name="country" (keyup)="checkFormContent()" required>
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label for="credit_card_number">Credit Card Number</label>
-          <input type="text" [(ngModel)]="creditcard" class="form-control" id="credit_card_number"
+          <input type="number" [(ngModel)]="creditcard" class="form-control" id="credit_card_number"
                  name="credit_card_number"
                  placeholder="0000-0000-0000-0000"
-                 required pattern="\d{4}-\d{4}-\d{4}-\d{4}">
+                 (keyup)="checkFormContent()"
+                 required pattern="\d{4}-\d{4}-\d{4}-\d{4}"
+                 maxlength="16">
         </div>
         <div class="col-md-2 mb-3">
           <label for="credit_card_expiration_month">Month</label>
           <select name="credit_card_expiration_month" [(ngModel)]="month" id="credit_card_expiration_month"
-                  class="form-control" required>
+                  class="form-control" (change)="checkFormContent()" required>
             <option value="1">Jan</option>
             <option value="2">Feb</option>
             <option value="3">Mar</option>
@@ -86,7 +88,7 @@
         </div>
         <div class="col-md-2 mb-3">
           <label>Year</label>
-          <select name="credit_card_expiration_year" [(ngModel)]="year" class="form-control" required>
+          <select name="credit_card_expiration_year" [(ngModel)]="year" class="form-control" (change)="checkFormContent()" required>
             <option value="1">{{date}}</option>
             <option value="2">{{date + 1}}</option>
             <option value="3">{{date + 2}}</option>
@@ -98,11 +100,11 @@
         <div class="col-md-2 mb-3">
           <label for="credit_card_cvv">CVV</label>
           <input type="password" [(ngModel)]="cvv" class="form-control" id="credit_card_cvv"
-                 name="credit_card_cvv" placeholder="123" required pattern="\d{3}">
+                 name="credit_card_cvv" placeholder="123" (keyup)="checkFormContent()" required pattern="\d{3}" maxlength="3">
         </div>
       </div>
       <div class="form-row center-contents last-row">
-          <button mat-button class="btn btn-info" type="submit" (click)="sendOrder()">Place order</button>
+          <button mat-button class="btn btn-info" type="submit" (click)="sendOrder()" [disabled]="orderButtonBool">Place order</button>
       </div>
     </form>
   </div>
