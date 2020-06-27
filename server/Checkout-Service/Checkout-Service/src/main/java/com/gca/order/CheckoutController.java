@@ -84,7 +84,7 @@ public class CheckoutController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/orders/{ordNumber}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
-	@CircuitBreaker(name = MAIN_SERVICE)
+	@CircuitBreaker(name = MAIN_SERVICE, fallbackMethod = "test")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Order getOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
@@ -102,9 +102,10 @@ public class CheckoutController {
 	}
 	
 	
-//	private ResponseEntity<String> test(Exception e) {
-//		return new ResponseEntity<String>("hallo", null);
-//	}
+	private Order test(Exception e) {
+		System.out.println("Ich bin ein Fallback!");
+		return null;
+	}
 	
 	
 	public boolean authorization(HttpServletRequest request) {
