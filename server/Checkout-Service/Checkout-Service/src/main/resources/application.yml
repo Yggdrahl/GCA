@@ -1,23 +1,7 @@
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        registerHealthIndicator: true
-        slidingWindowSize: 5
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 5s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 5
-        recordExceptions:
-                - org.springframework.web.client.HttpServerErrorException
-                - java.util.concurrent.TimeoutException
-                - java.io.IOException
+resilience4j.ratelimiter:
     instances:
-      mainService:
-        baseConfig: default
-      stockService:
+      CheckoutService:
         limitForPeriod: 1
         limitRefreshPeriod: 5s # wie viele Anfragen alle 5 Sekunden --> 1 (limitForPeriod) 
         timeoutDuration: 0s # zusätzliche Anfragen, innerhalb der 5 Sekunden, sollen getimeoutet werden
+        

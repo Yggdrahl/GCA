@@ -56,6 +56,7 @@ public class CheckoutService {
 
 	public int checkout(Order order) {
 		
+		
 		String ip = getIp();
 		
 		if(order == null) {
@@ -83,6 +84,7 @@ public class CheckoutService {
 			//Schritt 3 und Versandkosten bestimmen
 			
 			if(actualCart.size() <= 0) {
+				LOG.error("Cart is empty or Cart-Service is down");
 				return -1;
 			}
 			
@@ -102,7 +104,7 @@ public class CheckoutService {
 			
 			
 		}
-		
+		LOG.error("Cart is empty or Catalog-Service is down");
 		return -1;
 		
 	}
@@ -120,7 +122,8 @@ public class CheckoutService {
 		
 		//---------------------------------------------------/*
 		Request request = new Request.Builder()
-                .url("http://" + ip + ":8084/cart")
+                //.url("http://" + ip + ":8084/cart")
+				.url("http://localhost:8084/cart")
                 //.addHeader("Content-Type", "application/json")  // add request headers
                 .build();
 
@@ -174,7 +177,7 @@ public List<Product> getCatalog() {
 		
 		//---------------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://" + ip + ":8081/products")
+                .url("http://localhost:8081/products")
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -242,7 +245,7 @@ public List<Product> getCatalog() {
 		
 		//------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://" + ip + ":8082/getShippingCosts/?costs=" + orderSum)
+                .url("http://localhost:8082/getShippingCosts/?costs=" + orderSum)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -317,7 +320,7 @@ public List<Product> getCatalog() {
 		String ip = getIp();
 		//------------------------------------------
 				Request request = new Request.Builder()
-		                .url("http://" + ip + ":8084/emptyCart")
+		                .url("http://localhost:8084/emptyCart")
 		                .delete()
 		                .build();
 
