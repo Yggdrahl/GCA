@@ -17,3 +17,7 @@ resilience4j:
     instances:
       mainService:
         baseConfig: default
+      stockService:
+        limitForPeriod: 1
+        limitRefreshPeriod: 5s # wie viele Anfragen alle 5 Sekunden --> 1 (limitForPeriod) 
+        timeoutDuration: 0s # zusätzliche Anfragen, innerhalb der 5 Sekunden, sollen getimeoutet werden

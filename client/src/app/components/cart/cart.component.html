@@ -37,8 +37,8 @@
         </div>
         <div class="col-md-2 mb-3">
           <label for="zip_code">Zip Code</label>
-          <input type="number" [(ngModel)]="zip" class="form-control"
-                 name="zip_code" id="zip_code" placeholder="12345" (keyup)="checkFormContent()" required pattern="\d{4,5}"  max="99999">
+          <input type="text" [(ngModel)]="zip" class="form-control"
+                 name="zip_code" id="zip_code" placeholder="12345" (keyup)="checkFormContent()" required pattern="\d{4,5}"  maxlength="5">
         </div>
 
       </div>
@@ -61,12 +61,12 @@
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label for="credit_card_number">Credit Card Number</label>
-          <input type="number" [(ngModel)]="creditcard" class="form-control" id="credit_card_number"
+          <input type="text" [(ngModel)]="creditcard" class="form-control" id="credit_card_number"
                  name="credit_card_number"
                  placeholder="0000-0000-0000-0000"
                  (keyup)="checkFormContent()"
                  required pattern="\d{4}-\d{4}-\d{4}-\d{4}"
-                 maxlength="16">
+                 maxlength="19">
         </div>
         <div class="col-md-2 mb-3">
           <label for="credit_card_expiration_month">Month</label>
