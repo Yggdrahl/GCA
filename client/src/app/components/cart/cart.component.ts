@@ -108,8 +108,12 @@ export class CartComponent implements OnInit {
       const headers = {'Content-Type': 'application/json', 'Authorization': ""+this.authPW};
       this.http.post(this.urlOrder, this.order, {headers}).subscribe((res) => {
         this.orderNumber = res;
-        OrderConfirmationComponent.prototype.setOrderNumber(this.orderNumber);
-        this.router.navigate(["/order-confirmation"]);
+        //OrderConfirmationComponent.prototype.setOrderNumber(this.orderNumber);
+        //this.router.navigate(["/order-confirmation"]);
+        if(res != -1) {
+          this.router.navigate(["/order-confirmation"], { queryParams: { ordnum: res } });
+        }
+        
       });
     }
 

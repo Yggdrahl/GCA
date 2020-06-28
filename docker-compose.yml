@@ -1,0 +1,20 @@
+cart-service:
+    build: server/Cart-Service/Cart-Service/
+    ports:
+        - "8084:8084"
+catalog-service:
+    build: server/Catalog/Catalog-Service/
+    ports:
+        - "8081:8081"
+shipping-service:
+    build: server/Shipping/Shipping-Service/
+    ports:
+        - "8082:8082"
+checkout-service:
+    build: server/Checkout-Service/Checkout-Service/
+    ports:
+        - "8083:8083"
+frontend:
+    build: client/
+    ports:
+        - "4200:4200"
