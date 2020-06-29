@@ -26,7 +26,7 @@ public class ProductController {
 	
 
 	@RequestMapping("/products")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:8083" })
 	public List<Product> getAll() {
 		LOG.info("http.GET on '/products'");
 		return productService.getAll();
