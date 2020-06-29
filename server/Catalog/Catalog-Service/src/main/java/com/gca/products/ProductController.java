@@ -26,25 +26,25 @@ public class ProductController {
 	
 
 	@RequestMapping("/products")
-	@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:8083" })
-	public List<Product> getAll() {
-		LOG.info("http.GET on '/products'");
+	@CrossOrigin(origins = "http://localhost:4200")
+	public List<Product> getAll(HttpServletRequest request) {
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
 		return productService.getAll();
 	}
 
 	@RequestMapping("/product/")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public @ResponseBody Product getProduct(@RequestParam("id") int id) {
-		LOG.info("http.GET on '/product/'");
+	public @ResponseBody Product getProduct(HttpServletRequest request, @RequestParam("id") int id) {
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
+		//LOG.info("http.GET on '/product/'");
 		return productService.getProduct(id);
 	}
 
 	@RequestMapping("/product/{name}")									//Mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
-	public Product getProduct(@PathVariable("name") String name) {
-
+	public Product getProduct(HttpServletRequest request, @PathVariable("name") String name) {
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
 		if (name.matches("[0-9]+")) {
-			LOG.info("http.GET on '/product/{" + name + "}' | Could be Number or String" );
 			return productService.getProduct(Integer.valueOf(name));
 		} else {
 			return productService.getProduct(name);

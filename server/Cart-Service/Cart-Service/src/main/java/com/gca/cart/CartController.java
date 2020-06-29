@@ -42,50 +42,82 @@ public class CartController {
 		
 	@RequestMapping("/cart")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public List<Product> getCart() {
-		LOG.info("http.GET on '/cart'");
-		return cartService.getAll();
+	public List<Product> getCart(HttpServletRequest request) {
+		
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			return cartService.getAll();
+		}
+		LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
+		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cart")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public void insertIntoCart(@RequestBody Product product) {
-		LOG.info("http.POST on '/cart' | Body: \"id\":" + product.getId());
-		cartService.add(product);
+	public void insertIntoCart(HttpServletRequest request, @RequestBody Product product) {
+		
+		LOG.info("EndpointMapping -> POST: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			LOG.info("http.POST on '/cart' | Body: \"id\":" + product.getId());
+			cartService.add(product);
+		} else {
+			LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
+		}	
 	}
 		
 	@RequestMapping(method = RequestMethod.DELETE, value = "/cart/{id}") //Hier nutzen wir eine dynamische URL mit Umgebungsvariable
 	@CrossOrigin(origins = "http://localhost:4200")
-	public void deleteFromCart(@PathVariable("id") int id) {
-		LOG.info("http.DELETE on '/cart' (Product.id=" + id + ")");
+	public void deleteFromCart(HttpServletRequest request, @PathVariable("id") int id) {
+		
+		LOG.info("EndpointMapping -> DELETE: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			LOG.info("http.DELETE on '/cart' (Product.id=" + id + ")");
 		cartService.remove(id);
+			
+		} else {
+			LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");		
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/emptyCart")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public void deleteCart() {
-		LOG.info("http.DELETE on '/emptyCart' (empties the whole cart)");
+	public void deleteCart(HttpServletRequest request) {
+		
+		LOG.info("EndpointMapping -> DELETE: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			LOG.info("http.DELETE on '/emptyCart' (empties the whole cart)");
 		cartService.removeAll();
+			
+		} else {
+			LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");		
+		}
+		
+		
+		
 	}
 	
-	@GetMapping("/validate") //Kleiner Test-Endpunkt
-	@CrossOrigin(origins = "http://localhost:4200")
-	//public String validate(@RequestHeader("Authorization") String Authorization, HttpServletRequest request )  {
-	public List<Product> validate(HttpServletRequest request)  {
-		
-		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
-		if(authorization(request)) {
-			LOG.info("Authentification correct");
-			
-			List<Product> liste = new ArrayList<Product>();
-			liste.add(new Product(99, 99.99, "teures Ding", ""));
-			
-			return liste;
-		}
-		LOG.error("Authentification incorrect");
-		return null;
-			
-	}
+//	@GetMapping("/validate") //Kleiner Test-Endpunkt
+//	@CrossOrigin(origins = "http://localhost:4200")
+//	//public String validate(@RequestHeader("Authorization") String Authorization, HttpServletRequest request )  {
+//	public List<Product> validate(HttpServletRequest request)  {
+//		
+//		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+//		if(authorization(request)) {
+//			LOG.info("Authentification correct");
+//			
+//			List<Product> liste = new ArrayList<Product>();
+//			liste.add(new Product(99, 99.99, "teures Ding", ""));
+//			
+//			return liste;
+//		}
+//		LOG.error("Authentification incorrect");
+//		return null;
+//			
+//	}
 	
 	public boolean authorization(HttpServletRequest request) {
 		if(request.getHeader("Authorization") != null) {

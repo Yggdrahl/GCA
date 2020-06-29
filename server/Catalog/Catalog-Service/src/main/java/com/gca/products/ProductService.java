@@ -3,11 +3,14 @@ package com.gca.products;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
+	
+	private Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
 	private List<Product> repo = new ArrayList<Product>(
 			Arrays.asList(new Product(1, 149.98, "Vintage-Objektiv", "assets/images/products/camera-lens.jpg"),
@@ -30,9 +33,11 @@ public class ProductService {
 
 		for (int i = 0; i < this.repo.size(); i++) {
 			if (this.repo.get(i).id == id) {
+				LOG.info("Product ID:" + id + " found in the catalog-service");
 				return this.repo.get(i);
 			}
 		}
+		LOG.info("404 | Product ID:" + id + " not found in the catalog-service");
 		return null;
 	}
 
@@ -40,9 +45,11 @@ public class ProductService {
 
 		for (int i = 0; i < this.repo.size(); i++) {
 			if (this.repo.get(i).name.equals(name)) {
+				LOG.info("First Product with Name:" + name + " found in the catalog-service");
 				return this.repo.get(i);
 			}
 		}
+		LOG.info("404 | Product Name:" + name + " not found in the catalog-service");
 		return null;
 	}
 

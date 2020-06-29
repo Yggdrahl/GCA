@@ -40,16 +40,28 @@ public class ShippingController {
 	
 	@RequestMapping("/getShippingCosts")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public @ResponseBody double getShippingCosts(@RequestParam("costs") double costs) {
-		LOG.info("http.GET on '/getShippingCosts'");
-		return shippingService.getShippingCosts(costs);
+	public @ResponseBody double getShippingCosts(HttpServletRequest request, @RequestParam("costs") double costs) {
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			return shippingService.getShippingCosts(costs);
+		}
+		LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
+		return 10;
+	
 	}
 	
 	@RequestMapping("/getTracking")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public String getShippingCosts() {
-		LOG.info("http.GET on '/getTracking'");
-		return shippingService.generateTracking();
+	public String getShippingCosts(HttpServletRequest request) {
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
+		if (authorization(request)) {
+			LOG.info("Authentification correct");
+			return shippingService.generateTracking();
+		}
+		LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
+		return null;
+
 	}
 	
 	public boolean authorization(HttpServletRequest request) {

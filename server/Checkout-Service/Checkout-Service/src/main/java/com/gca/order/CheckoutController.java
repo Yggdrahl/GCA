@@ -57,13 +57,13 @@ public class CheckoutController {
 	// Retry
 	@Retryable (value = {RuntimeException.class}, maxAttempts = 4, backoff = @Backoff (2000))
 	public int checkout(HttpServletRequest request, @RequestBody Order order) {
-		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+		LOG.info("EndpointMapping -> POST: " + request.getRequestURL().toString());
 		if (authorization(request)) {
 			LOG.info("Authentification correct");
 
 			return checkoutService.checkout(order);
 		}
-		LOG.error("Authentification incorrect");
+		LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
 		return -1;
 	}
 
@@ -82,12 +82,12 @@ public class CheckoutController {
 	})
 	@Retryable (value = {RuntimeException.class}, maxAttempts = 4, backoff = @Backoff (2000))
 	public Order getOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
-		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
+		LOG.info("EndpointMapping -> GET: " + request.getRequestURL().toString());
 		if (authorization(request)) {
 			LOG.info("Authentification correct");
 			return checkoutService.getOrder(ordNumber);
 		}
-		LOG.error("Authentification incorrect");
+		LOG.error("Authentification incorrect (Requests shouldn't be anonymus)");
 		return null;
 	}
 
@@ -110,12 +110,12 @@ public class CheckoutController {
 	
 	// Bulkhead and Circuit Breaker
 	public int getFallbackCheckout(HttpServletRequest request, @RequestBody Order order) {
-		LOG.error("Circuitbreaker activatet");
+		LOG.error("Circuitbreaker or Bulkhead activatet (Checkout.Controller.getFallbackCheckout)");
 		return -1;
 	}
 
 	public Order getFallbackOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
-		LOG.error("Circuittbreaker activatet");
+		LOG.error("Circuitbreaker or Bulkhead activatet (Checkout.Controller.getFallbackOrder)");
 		return null;
 	}
 	
