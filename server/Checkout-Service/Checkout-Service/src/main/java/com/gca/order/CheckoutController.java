@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
+
 @RestController
+@EnableRetry
 public class CheckoutController {
 
 	private String authPW = "testpw";
@@ -44,6 +52,7 @@ public class CheckoutController {
 							@HystrixProperty(name = "coreSize", value = "20"),	// Wie viele Threads sollen höchstens auf eine Antwort von checkout warten
 							@HystrixProperty(name = "maxQueueSize", value = "10") // Wie viele sollen höchstens in der Warteschlange warten, bevor die zugang auf den Thread bekommen
 	})
+	@Retryable (value = {RuntimeException.class}, maxAttempts = 4, backoff = @Backoff (2000))
 	public int checkout(HttpServletRequest request, @RequestBody Order order) {
 		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
 		if (authorization(request)) {
@@ -66,6 +75,7 @@ public class CheckoutController {
 							@HystrixProperty(name = "coreSize", value = "20"),	// Wie viele Threads sollen höchstens auf eine Antwort von checkout warten
 							@HystrixProperty(name = "maxQueueSize", value = "10") // Wie viele sollen höchstens in der Warteschlange warten, bevor die zugang auf den Thread bekommen
 	})
+	@Retryable (value = {RuntimeException.class}, maxAttempts = 4, backoff = @Backoff (2000))
 	public Order getOrder(HttpServletRequest request, @PathVariable("ordNumber") int ordNumber) {
 		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
 		if (authorization(request)) {
@@ -102,6 +112,11 @@ public class CheckoutController {
 		return null;
 	}
 	
+	@Recover
+	public String recover(Throwable t) {
+		LOG.info("Checkout.Controller.recover");
+		return "Error Class ::" + t.getClass().getName();
+		}
 
 
 	// ---------------------------------------------------------------

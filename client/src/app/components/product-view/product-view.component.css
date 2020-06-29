@@ -76,15 +76,30 @@ section {
   padding-bottom: 50px;
 }
 
-.cartLength
+.cartLength1
 {
   position: absolute;
   Background-color: #4dc8c6;
-  color: black;
-  border-radius: 60px;
+  color: rgba(255, 255, 255, 0.71);
+  padding: 2px;
+  border-radius: 10px;
   text-align: center;
   font-size: 12pt;
   width: 20px;
-  right: 425px;
-  top: 62px;
+  right: 417px;
+  top: 58px;
+}
+
+.cartLength2
+{
+  position: absolute;
+  Background-color: #4dc8c6;
+  color: rgba(255, 255, 255, 0.71);
+  padding: 2px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12pt;
+  width: 30px;
+  right: 415px;
+  top: 58px;
 }
