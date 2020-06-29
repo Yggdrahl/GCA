@@ -62,7 +62,9 @@ public class CheckoutService {
 
 	public int checkout(Order order) {
 		
-		
+		double time = System.currentTimeMillis();
+		sleepWait(1000);
+		LOG.info("-------------------Artifitial delay an request: " + ((System.currentTimeMillis() - time)/1000) + " seconds.------------------");
 		//String ip = getIp();
 		
 		if(order == null) {
@@ -346,6 +348,15 @@ public List<Product> getCatalog() {
 					e.printStackTrace();
 				}
 		        //---------------------------------
+	}
+	
+	private static void sleepWait(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Resiliennce
