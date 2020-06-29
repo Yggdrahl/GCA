@@ -13,6 +13,8 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,11 @@ public class CheckoutService {
 	
 	public List<Order> orders = new ArrayList<Order>(); //Alle Bestellungen
 	
-	private String ip = "localhost";
+	private String authPW="test";
+	
+	//private String ip = "localhost";
+	//private String host = "172.18.11.241"; //Bitte stehen lassen
+	
 	
 	public String getIp() {
 		try {
@@ -57,7 +63,7 @@ public class CheckoutService {
 	public int checkout(Order order) {
 		
 		
-		String ip = getIp();
+		//String ip = getIp();
 		
 		if(order == null) {
 			return -1;
@@ -122,9 +128,9 @@ public class CheckoutService {
 		
 		//---------------------------------------------------/*
 		Request request = new Request.Builder()
-                //.url("http://" + ip + ":8084/cart")
-				.url("http://localhost:8084/cart")
-                //.addHeader("Content-Type", "application/json")  // add request headers
+				.url("http://cart:8084/cart")
+                .addHeader("Content-Type", "application/json")  // add request headers
+                .addHeader("Authorization", this.authPW)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -177,7 +183,7 @@ public List<Product> getCatalog() {
 		
 		//---------------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8081/products")
+                .url("http://catalog:8081/products")
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -245,7 +251,8 @@ public List<Product> getCatalog() {
 		
 		//------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8082/getShippingCosts/?costs=" + orderSum)
+                .url("http://shipping:8082/getShippingCosts/?costs=" + orderSum)
+                .addHeader("Authorization", this.authPW)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -269,7 +276,8 @@ public List<Product> getCatalog() {
 		String result = "0001";
 		//------------------------------------------
 		Request request = new Request.Builder()
-                .url("http://localhost:8082/getTracking")
+                .url("http://shipping:8082/getTracking")
+                .addHeader("Authorization", this.authPW)
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
@@ -320,7 +328,8 @@ public List<Product> getCatalog() {
 		String ip = getIp();
 		//------------------------------------------
 				Request request = new Request.Builder()
-		                .url("http://localhost:8084/emptyCart")
+		                .url("http://cart:8084/emptyCart")
+		                .addHeader("Authorization", this.authPW)
 		                .delete()
 		                .build();
 

@@ -1,14 +1,7 @@
-#FROM node:latest AS builder
-#WORKDIR /app
-#EXPOSE 4200
-#ENV PATH /app/node_module/.bin:$PATH
-#COPY ./package.json /app/package.json
-#RUN npm install
-#RUN npm install -g @angular/cli@9.1.7
-#COPY . /app
-#CMD ng serve
+#Angular
 # base image
 FROM node:12.2.0
+EXPOSE 4200
 # set working directory
 WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
