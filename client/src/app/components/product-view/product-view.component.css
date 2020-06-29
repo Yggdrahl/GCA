@@ -75,3 +75,16 @@ section {
   font-weight: bold;
   padding-bottom: 50px;
 }
+
+.cartLength
+{
+  position: absolute;
+  Background-color: #4dc8c6;
+  color: black;
+  border-radius: 60px;
+  text-align: center;
+  font-size: 12pt;
+  width: 20px;
+  right: 425px;
+  top: 62px;
+}

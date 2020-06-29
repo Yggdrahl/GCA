@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  cartContent;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
+
+
 
 }
