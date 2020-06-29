@@ -95,11 +95,11 @@ section {
   position: absolute;
   Background-color: #4dc8c6;
   color: rgba(255, 255, 255, 0.71);
-  padding: 2px;
+  padding: 1px;
   border-radius: 15px;
   text-align: center;
   font-size: 12pt;
   width: 30px;
-  right: 415px;
-  top: 58px;
+  right: 410px;
+  top: 60px;
 }

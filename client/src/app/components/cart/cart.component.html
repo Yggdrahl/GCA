@@ -11,12 +11,12 @@
     <p class="cartProducts">
       <img src="{{cartContent.image}}" class="productImage">
       <span class="name">{{cartContent.name}}</span><br>
-      <span class="price">{{cartContent.price}} €</span>
+      <span class="price">{{cartContent.price}} TRY</span>
     </p>
   </div>
-  <p class="shippingCost" *ngIf="cartContent && cartContent.length > 0">Shipping Cost: {{shippingCost}} €</p>
+  <p class="shippingCost" *ngIf="cartContent && cartContent.length > 0">Shipping Cost: {{shippingCost}} TRY</p>
   <p class="totalCost" *ngIf="cartContent && cartContent.length > 0">Total Cost: <span
-    class="totalPrice"> {{(totalPrice + shippingCost).toFixed(2)}} €</span></p>
+    class="totalPrice"> {{(totalPrice + shippingCost).toFixed(2)}} TRY</span></p>
 </div>
 
 <div *ngIf="cartContent && cartContent.length > 0" class="container py-3 px-lg-5 py-lg-5">

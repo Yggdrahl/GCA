@@ -47,11 +47,14 @@ public class CheckoutController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	//@RateLimiter(name = "CheckoutService", fallbackMethod = "getFallbackCheckout")
 	@HystrixCommand(
-					fallbackMethod = "getFallbackCheckout",							//Circuitbreaker
+					// Circuitbreaker
+					fallbackMethod = "getFallbackCheckout",
+					// Bulkhead
 					threadPoolKey = "checkoutPool", threadPoolProperties = {
 							@HystrixProperty(name = "coreSize", value = "20"),	// Wie viele Threads sollen höchstens auf eine Antwort von checkout warten
 							@HystrixProperty(name = "maxQueueSize", value = "10") // Wie viele sollen höchstens in der Warteschlange warten, bevor die zugang auf den Thread bekommen
 	})
+	// Retry
 	@Retryable (value = {RuntimeException.class}, maxAttempts = 4, backoff = @Backoff (2000))
 	public int checkout(HttpServletRequest request, @RequestBody Order order) {
 		LOG.info("EnpointMapping -> GET: " + request.getRequestURL().toString());
@@ -70,7 +73,9 @@ public class CheckoutController {
 	@ResponseBody
 	//@RateLimiter(name = "CheckoutService", fallbackMethod = "getFallbackOrder")
 	@HystrixCommand(
+					// Circuitbreaker
 					fallbackMethod = "getFallbackOrder",
+					// Bulkhead
 					threadPoolKey = "checkoutPool", threadPoolProperties = {
 							@HystrixProperty(name = "coreSize", value = "20"),	// Wie viele Threads sollen höchstens auf eine Antwort von checkout warten
 							@HystrixProperty(name = "maxQueueSize", value = "10") // Wie viele sollen höchstens in der Warteschlange warten, bevor die zugang auf den Thread bekommen
@@ -102,6 +107,8 @@ public class CheckoutController {
 	 * Funktioniert noch nicht public int getFallbackStocks(Exception e) { return
 	 * checkoutService.checkout(order); }
 	 */
+	
+	// Bulkhead and Circuit Breaker
 	public int getFallbackCheckout(HttpServletRequest request, @RequestBody Order order) {
 		LOG.error("Circuitbreaker activatet");
 		return -1;
@@ -112,6 +119,7 @@ public class CheckoutController {
 		return null;
 	}
 	
+	// Retry
 	@Recover
 	public String recover(Throwable t) {
 		LOG.info("Checkout.Controller.recover");
