@@ -6,6 +6,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,18 @@ public class CheckoutService {
 	
 	public List<Order> orders = new ArrayList<Order>(); //Alle Bestellungen
 	
-	private String authPW="testpw";
+	@Value("${authentication.password}")
+	private String authPW;
+	
+	@Bean
+	public void checkAuthenticatorRequest() {
+		if(authPW == null || authPW == "" || authPW.contentEquals("")) {
+			authPW = "testPW";
+			LOG.info("Authenticator was invalid and had to be reset");
+		} else {
+			LOG.info("Authenticator was set trough 'application.properties'");
+		}
+	}
 	
 	//private String ip = "localhost";
 	//private String host = "172.18.11.241"; //Bitte stehen lassen
@@ -63,6 +76,8 @@ public class CheckoutService {
 	public int checkout(Order order) {
 		
 		//String ip = getIp();
+		
+		
 		
 		if(order == null) {
 			return -1;

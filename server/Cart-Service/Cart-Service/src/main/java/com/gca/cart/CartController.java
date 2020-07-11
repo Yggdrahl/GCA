@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CartController {
 	
-	private String authPW = "testpw";
+	@Value("${authentication.password}")
+	private String authPW;
+	
+	@Bean
+	public void checkAuthenticator() {
+		if(authPW == null || authPW == "" || authPW.contentEquals("")) {
+			authPW = "testPW";
+			LOG.info("Authenticator was invalid and had to be reset");
+		} else {
+			LOG.info("Authenticator was set trough 'application.properties'");
+		}
+	}
 	
 	private Logger LOG = LoggerFactory.getLogger(CartController.class);
 		

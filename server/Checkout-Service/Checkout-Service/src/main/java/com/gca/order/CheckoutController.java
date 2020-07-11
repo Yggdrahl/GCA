@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,19 @@ import org.springframework.retry.annotation.Retryable;
 @EnableRetry
 public class CheckoutController {
 
-	private String authPW = "testpw";
+	
+	@Value("${authentication.password}")
+	private String authPW;
+	
+	@Bean
+	public void checkAuthenticator() {
+		if(authPW == null || authPW == "" || authPW.contentEquals("")) {
+			authPW = "testPW";
+			LOG.info("Authenticator was invalid and had to be reset");
+		} else {
+			LOG.info("Authenticator was set trough 'application.properties'");
+		}
+	}
 
 	@Autowired
 	private CheckoutService checkoutService;
