@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-ds
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-ds
+  template:
+    metadata:
+      name: frontend-ds
+      labels:
+        app: frontend-ds
+    spec:
+      containers:
+      - name: frontend-ds
+        image: yggdrahl/frontend:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
