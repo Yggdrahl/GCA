@@ -8,9 +8,9 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: 8081
+      port: 8082
       # the node port must be unique in terms of a single machine
-      nodePort: 30001
+      nodePort: 30003
       name: http
   selector:
     app: catalog-ds

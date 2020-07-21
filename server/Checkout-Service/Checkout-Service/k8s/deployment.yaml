@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog-ds
+  name: checkout-ds
   labels:
     app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: catalog-ds
+      app: checkout-ds
   template:
     metadata:
-      name: catalog-ds
+      name: checkout-ds
       labels:
-        app: catalog-ds
+        app: checkout-ds
     spec:
       containers:
-      - name: catalog-ds
+      - name: checkout-ds
         image: yggdrahl/catalog:1.0.0
         imagePullPolicy: Always
         ports:
-        - containerPort: 8082
+        - containerPort: 8084

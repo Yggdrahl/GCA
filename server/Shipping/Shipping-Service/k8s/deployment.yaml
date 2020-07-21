@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-ds
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping-ds
+  template:
+    metadata:
+      name: shipping-ds
+      labels:
+        app: shipping-ds
+    spec:
+      containers:
+        - name: shipping-ds
+          image: yggdrahl/shipping:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083

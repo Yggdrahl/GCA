@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-ds
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-ds
+  template:
+    metadata:
+      name: cart-ds
+      labels:
+        app: cart-ds
+    spec:
+      containers:
+        - name: cart-ds
+          image: yggdrahl/cart:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
